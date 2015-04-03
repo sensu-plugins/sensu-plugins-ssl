@@ -9,8 +9,8 @@
 ## Functionality
 
 ## Files
- * bin/check-ssl-cert
- * bin/check-ssl-host
+ * bin/check-ssl-cert.rb
+ * bin/check-ssl-host.rb
 
 ## Usage
 
@@ -31,7 +31,7 @@ You can also download the key from /certs/ within each repository.
 
 #### Bundler
 
-Add *sensu-plugins-disk-checks* to your Gemfile and run `bundle install` or `bundle update`
+Add *sensu-plugins-ssl* to your Gemfile and run `bundle install` or `bundle update`
 
 #### Chef
 
@@ -39,7 +39,7 @@ Using the Sensu **sensu_gem** LWRP
 ```
 sensu_gem 'sensu-plugins-ssl' do
   options('--prerelease')
-  version '0.0.1.alpha.4'
+  version '0.0.1.alpha.1'
 end
 ```
 
@@ -47,14 +47,8 @@ Using the Chef **gem_package** resource
 ```
 gem_package 'sensu-plugins-ssl' do
   options('--prerelease')
-  version '0.0.1.alpha.4'
+  version '0.0.1.alpha.1'
 end
 ```
 
 ## Notes
-
-[1]:[https://travis-ci.org/sensu-plugins/sensu-plugins-ssl]
-[2]:[http://badge.fury.io/rb/sensu-plugins-ssl]
-[3]:[https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl]
-[4]:[https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl]
-[5]:[https://gemnasium.com/sensu-plugins/sensu-plugins-ssl]
