@@ -1,7 +1,15 @@
+
+require 'sensu-plugins-ssl/version'
+
+# Load the defaults
+
 #
-# Set gem version
+# Default class
 #
-module SensuPluginsSsl
-  # Gem version
-  VERSION = '0.0.1.alpha.1'
+module SensuPluginsSSL
+  class << self
+  end
+
+  class << self
+  end
 end
