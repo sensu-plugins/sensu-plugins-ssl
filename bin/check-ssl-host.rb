@@ -33,12 +33,14 @@
 #   details.
 #
 
-require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'sensu-plugin/check/cli'
 require 'date'
 require 'openssl'
 require 'socket'
 
+#
+# Check SSL Host
+#
 class CheckSSLHost < Sensu::Plugin::Check::CLI
   check_name 'check_ssl_host'
 
@@ -91,7 +93,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
     certs
   end
 
-  def verify_expiry(cert)
+  def verify_expiry(cert) # rubocop:disable all
     # Expiry check
     days = (cert.not_after.to_date - Date.today).to_i
     message = "#{config[:host]} - #{days} days until expiry"
@@ -117,7 +119,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
   end
 
   def verify_hostname(cert)
-    unless OpenSSL::SSL.verify_certificate_identity(cert, config[:host])
+    unless OpenSSL::SSL.verify_certificate_identity(cert, config[:host]) # rubocop:disable all
       critical "#{config[:host]} hostname mismatch (#{cert.subject})"
     end
   end

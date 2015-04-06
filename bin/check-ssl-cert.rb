@@ -28,11 +28,13 @@
 #   for details.
 #
 
-require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'date'
 require 'openssl'
 require 'sensu-plugin/check/cli'
 
+#
+# Check SSL Cert
+#
 class CheckSSLCert < Sensu::Plugin::Check::CLI
   option :critical,
          description: 'Numbers of days left',
@@ -77,7 +79,7 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
     end
   end
 
-  def run
+  def run # rubocop:disable all
     validate_opts
     expiry = config[:pem] ? ssl_pem_expiry : ssl_cert_expiry
     days_until = (Date.parse(expiry.to_s) - Date.today).to_i
