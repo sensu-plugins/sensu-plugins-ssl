@@ -45,5 +45,5 @@ pvt_key = '~/.ssh/gem-private_key.pem'
     s.add_development_dependency 'github-markup',             '~> 1.3'
     s.add_development_dependency 'redcarpet',                 '~> 3.2'
     s.add_development_dependency 'yard',                      '~> 0.8'
-    s.add_development_dependency 'pry',                       '~> 0.10
+    s.add_development_dependency 'pry',                       '~> 0.10'
 end
