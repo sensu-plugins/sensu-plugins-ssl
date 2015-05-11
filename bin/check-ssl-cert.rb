@@ -64,7 +64,7 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
          long: '--port PORT'
 
   def ssl_cert_expiry
-    `openssl s_client -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
+    `openssl s_client -servername #{config[:host]} -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
   end
 
   def ssl_pem_expiry
