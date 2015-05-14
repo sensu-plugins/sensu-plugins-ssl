@@ -6,9 +6,9 @@ module SensuPluginsSSL
   module Version
     MAJOR = 0
     MINOR = 0
-    PATCH = 2
+    PATCH = 1
 
-    VER_STRING = [MAJOR, MINOR, PATCH, 'alpha.2'].compact.join('.')
+    VER_STRING = [MAJOR, MINOR, PATCH].compact.join('.')
 
     NAME   = 'sensu-plugins-ssl'
     BANNER = "#{NAME} v%s"
