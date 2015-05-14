@@ -6,7 +6,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## Unreleased][unreleased]
 
 ### Added
-- #2 Add ability to specify server to connect to
+- ffe1460fa1291c68d67c033c169fd823bf2b3748 Add ability to specify server to connect to
 
 
 #### 0.0.1.alpha.1
