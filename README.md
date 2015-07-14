@@ -1,6 +1,6 @@
 ## Sensu-Plugins-ssl
 
-[![Build Status](https://travis-ci.org/sensu-plugins/sensu-plugins-ssl.svg?branch=master)](https://travis-ci.org/sensu-plugins/sensu-plugins-ssl)
+[ ![Build Status](https://travis-ci.org/sensu-plugins/sensu-plugins-ssl.svg?branch=master)](https://travis-ci.org/sensu-plugins/sensu-plugins-ssl)
 [![Gem Version](https://badge.fury.io/rb/sensu-plugins-ssl.svg)](http://badge.fury.io/rb/sensu-plugins-ssl)
 [![Code Climate](https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl/badges/gpa.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl)
 [![Test Coverage](https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl/badges/coverage.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl)
