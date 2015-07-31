@@ -42,6 +42,8 @@ require 'socket'
 # Check SSL Host
 #
 class CheckSSLHost < Sensu::Plugin::Check::CLI
+  STARTTLS_PROTOS = %w(smtp)
+
   check_name 'check_ssl_host'
 
   option :critical,
@@ -81,8 +83,14 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
          long: '--skip-chain-verification',
          boolean: true
 
+  option :starttls,
+         description: 'use STARTTLS negotiation for the given protocol '\
+                      "(#{STARTTLS_PROTOS.join(', ')})",
+         long: '--starttls PROTO'
+
   def get_cert_chain(host, port)
     tcp_client = TCPSocket.new(host, port)
+    handle_starttls(config[:starttls], tcp_client) if config[:starttls]
     ssl_context = OpenSSL::SSL::SSLContext.new
     ssl_client = OpenSSL::SSL::SSLSocket.new(tcp_client, ssl_context)
     # SNI
@@ -91,6 +99,27 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
     certs = ssl_client.peer_cert_chain
     ssl_client.close
     certs
+  end
+
+  def handle_starttls(proto, socket)
+    if STARTTLS_PROTOS.include?(proto)
+      send("starttls_#{proto}", socket)
+    else
+      fail ArgumentError, "STARTTLS supported only for #{STARTTLS_PROTOS.join(', ')}"
+    end
+  end
+
+  def starttls_smtp(socket)
+    status = socket.readline
+    unless /^220 /.match(status)
+      critical "#{config[:host]} - did not receive initial SMTP 220"
+      # no fall-through
+    end
+    socket.puts 'STARTTLS'
+
+    status = socket.readline
+    return if /^220 /.match(status)
+    critical "#{config[:host]} - did not receive SMTP 220 in response to STARTTLS"
   end
 
   def verify_expiry(cert) # rubocop:disable all
