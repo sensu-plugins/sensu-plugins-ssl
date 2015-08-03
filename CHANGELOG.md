@@ -3,17 +3,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
-## [Unreleased][unreleased]
+## Unreleased
+### Changed
+- Forked from sensu-plugin project for internal use by SendGrid
+- Internally renamed gem to "sendgrid-sensu-plugins-ssl"
 
-## [0.0.4] - 2015-07-14
+### Added
+- Basic support for STARTTLS negotiation (only SMTP to start with)
+
+## 0.0.4 - 2015-07-14
 ### Changed
 - updated sensu-plugin gem to 1.2.0
 
-## [0.0.3] - 2015-06-18
+## 0.0.3 - 2015-06-18
 ### Added
 - plugin to test SSL using the [Qualys SSL Test API](https://www.ssllabs.com/ssltest/)
 
-## [0.0.2] - 2015-06-03
+## 0.0.2 - 2015-06-03
 ### Fixed
 - added binstubs
 

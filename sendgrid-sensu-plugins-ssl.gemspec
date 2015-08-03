@@ -4,35 +4,31 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'date'
 
 if RUBY_VERSION < '2.0.0'
-  require 'sensu-plugins-ssl'
+  require 'sendgrid-sensu-plugins-ssl'
 else
-  require_relative 'lib/sensu-plugins-ssl'
+  require_relative 'lib/sendgrid-sensu-plugins-ssl'
 end
-
-pvt_key = '~/.ssh/gem-private_key.pem'
 
 Gem::Specification.new do |s|
   s.authors                = ['Sensu-Plugins and contributors']
-  s.cert_chain             = ['certs/sensu-plugins.pem']
   s.date                   = Date.today.to_s
   s.description            = 'Sensu plugins for SSL'
-  s.email                  = '<sensu-users@googlegroups.com>'
+  s.email                  = '<operations@sendgrid.com>'
   s.executables            = Dir.glob('bin/**/*').map { |file| File.basename(file) }
   s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
-  s.homepage               = 'https://github.com/sensu-plugins/sensu-plugins-ssl'
+  s.homepage               = 'https://github.com/sendgrid-ops/sensu-plugins-ssl'
   s.license                = 'MIT'
-  s.metadata               = { 'maintainer'         => 'sensu-plugin',
+  s.metadata               = { 'maintainer'         => 'sendgrid',
                                'development_status' => 'active',
                                'production_status'  => 'unstable - testing recommended',
                                'release_draft'      => 'false',
                                'release_prerelease' => 'false'
                               }
-  s.name                   = 'sensu-plugins-ssl'
+  s.name                   = 'sendgrid-sensu-plugins-ssl'
   s.platform               = Gem::Platform::RUBY
   s.post_install_message   = 'You can use the embedded Ruby by setting EMBEDDED_RUBY=true in /etc/default/sensu'
   s.require_paths          = ['lib']
   s.required_ruby_version  = '>= 1.9.3'
-  s.signing_key            = File.expand_path(pvt_key) if $PROGRAM_NAME =~ /gem\z/
   s.summary                = 'Sensu plugins for SSL'
   s.test_files             = s.files.grep(%r{^(test|spec|features)/})
   s.version                = SensuPluginsSSL::Version::VER_STRING

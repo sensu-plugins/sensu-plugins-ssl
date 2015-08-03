@@ -39,7 +39,7 @@ end
 
 desc 'Bump the PATCH version'
 task :bump do
-  version_file = 'lib/sensu-plugins-ssl/version.rb'
+  version_file = 'lib/sendgrid-sensu-plugins-ssl/version.rb'
 
   # Read the file, bump the PATCH version
   contents = File.read(version_file).gsub(/(PATCH = )(\d+)/) { |_| Regexp.last_match[1] + (Regexp.last_match[2].to_i + 1).to_s }

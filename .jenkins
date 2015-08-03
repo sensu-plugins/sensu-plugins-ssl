@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+echo "*** $(basename $0)"
+set -e
+set -x
+
+ARTIFACT=$(gem build *.gemspec | grep File | awk '{print $2}')
+
+if [[ "$PUBLISH" == "1" ]]; then
+  curl -i -F file=@${ARTIFACT} gems.strepo.sjc1.sendgrid.net/upload
+  curl -i -F file=@${ARTIFACT} gems.repo.sjc1.sendgrid.net/upload
+fi
