@@ -79,7 +79,7 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
     end
   end
 
-  def run # rubocop:disable all
+  def run
     validate_opts
     expiry = config[:pem] ? ssl_pem_expiry : ssl_cert_expiry
     days_until = (Date.parse(expiry.to_s) - Date.today).to_i

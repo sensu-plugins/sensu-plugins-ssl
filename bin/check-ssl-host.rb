@@ -122,7 +122,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
     critical "#{config[:host]} - did not receive SMTP 220 in response to STARTTLS"
   end
 
-  def verify_expiry(cert) # rubocop:disable all
+  def verify_expiry(cert)
     # Expiry check
     days = (cert.not_after.to_date - Date.today).to_i
     message = "#{config[:host]} - #{days} days until expiry"

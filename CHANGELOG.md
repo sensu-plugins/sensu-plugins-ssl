@@ -4,6 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased][unreleased]
+- nothing
+
+## [0.0.5] - 2015-08-05
+### Changed
+- updated sensu-plugin gem to 1.2.0
+
 ### Added
 - Basic support for STARTTLS negotiation (only SMTP to start with)
 
@@ -27,6 +33,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - initial release
 
 [unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.4...HEAD
+[0.0.5]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.1...0.0.2
