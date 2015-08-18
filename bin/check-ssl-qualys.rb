@@ -24,7 +24,7 @@
 #   # Basic usage
 #   check-ssl-qualys.rb -d <domain_name>
 #   # Specify the CRITICAL and WARNING grades to a specific grade
-#   check-ssl-qualys.rb -h <hostmame> -c <critical_grade> -w <warning_grade>
+#   check-ssl-qualys.rb -d <domain_name> -c <critical_grade> -w <warning_grade>
 #   # Use --api-url to specify an alternate api host
 #   check-ssl-qualys.rb -d <domain_name> -api-url <alternate_host>
 #
