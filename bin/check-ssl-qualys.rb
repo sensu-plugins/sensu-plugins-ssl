@@ -28,6 +28,11 @@
 #   # Use --api-url to specify an alternate api host
 #   check-ssl-qualys.rb -d <domain_name> -api-url <alternate_host>
 #
+#  NOTE: This check takes a rather long time to run and will timeout if you're using
+#  the default sensu check timeout.  Make sure to set a longer timeout period in the
+#  check definition.  Two minutes or longer may be a good starting point as checks
+#  regularly take 90+ seconds to run.
+#
 # LICENSE:
 #   Copyright 2015 William Cooke <will@bruisyard.eu>
 #   Released under the same terms as Sensu (the MIT license); see LICENSE for
@@ -71,7 +76,7 @@ class CheckSSLQualys < Sensu::Plugin::Check::CLI
   option :num_checks,
          short: '-n NUM_CHECKS',
          long: '--number-checks NUM_CHECKS',
-         description: 'The number of checks to make before giving up',
+         description: 'The number of checks to make before giving up (timeout of check)',
          proc: proc { |t| t.to_i },
          default: 24
 
