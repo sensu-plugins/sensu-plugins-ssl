@@ -148,7 +148,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
   end
 
   def verify_hostname(cert)
-    unless OpenSSL::SSL.verify_certificate_identity(cert, config[:host]) # rubocop:disable all
+    unless OpenSSL::SSL.verify_certificate_identity(cert, config[:host]) # rubocop:disable Style/GuardClause
       critical "#{config[:host]} hostname mismatch (#{cert.subject})"
     end
   end
