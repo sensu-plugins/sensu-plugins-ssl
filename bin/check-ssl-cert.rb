@@ -62,8 +62,13 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
          short: '-p',
          long: '--port PORT'
 
+  option :servername,
+         description: 'Set the TLS SNI (Server Name Indication) extension',
+         short: '-s',
+         long: '--servername SERVER'
+
   def ssl_cert_expiry
-    `openssl s_client -servername #{config[:host]} -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
+    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
   end
 
   def ssl_pem_expiry
@@ -76,6 +81,7 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
     elsif config[:pem]
       unknown 'No such cert' unless File.exist? config[:pem]
     end
+    config[:servername] = config[:host] unless config[:servername]
   end
 
   def run
