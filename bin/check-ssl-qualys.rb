@@ -4,7 +4,7 @@
 #
 # DESCRIPTION:
 #   Runs a report using the Qualys SSL Labs API and then alerts if a
-#   domiain does not meet the grade specified for *ALL* hosts that are
+#   domain does not meet the grade specified for *ALL* hosts that are
 #   reachable from that domian.
 #
 #   The checks that are performed are documented on
