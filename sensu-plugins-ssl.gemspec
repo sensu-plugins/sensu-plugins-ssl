@@ -9,17 +9,17 @@ else
   require_relative 'lib/sensu-plugins-ssl'
 end
 
-pvt_key = '~/.ssh/gem-private_key.pem'
+#pvt_key = '~/.ssh/gem-private_key.pem'
 
 Gem::Specification.new do |s|
   s.authors                = ['Sensu-Plugins and contributors']
-  s.cert_chain             = ['certs/sensu-plugins.pem']
+  #s.cert_chain             = ['certs/sensu-plugins.pem']
   s.date                   = Date.today.to_s
   s.description            = 'This plugin provides native SSL instrumentation
                               for monitoring, including: hostname and chain
                               verification, cert expiry, and Qualys SSL Labs reporting'
   s.email                  = '<sensu-users@googlegroups.com>'
-  s.executables            = Dir.glob('bin/**/*').map { |file| File.basename(file) }
+  s.executables            = Dir.glob('bin/**/*.rb').map { |file| File.basename(file) }
   s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
   s.homepage               = 'https://github.com/sensu-plugins/sensu-plugins-ssl'
   s.license                = 'MIT'
@@ -34,12 +34,12 @@ Gem::Specification.new do |s|
   s.post_install_message   = 'You can use the embedded Ruby by setting EMBEDDED_RUBY=true in /etc/default/sensu'
   s.require_paths          = ['lib']
   s.required_ruby_version  = '>= 1.9.3'
-  s.signing_key            = File.expand_path(pvt_key) if $PROGRAM_NAME =~ /gem\z/
+  #s.signing_key            = File.expand_path(pvt_key) if $PROGRAM_NAME =~ /gem\z/
   s.summary                = 'Sensu plugins for SSL'
   s.test_files             = s.files.grep(%r{^(test|spec|features)/})
   s.version                = SensuPluginsSSL::Version::VER_STRING
 
-  s.add_runtime_dependency 'sensu-plugin', '1.2.0'
+  s.add_runtime_dependency 'sensu-plugin', '~> 1.2'
   s.add_runtime_dependency 'rest-client',  '1.8.0'
 
   s.add_development_dependency 'bundler',                   '~> 1.7'
@@ -49,6 +49,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake',                      '~> 10.0'
   s.add_development_dependency 'redcarpet',                 '~> 3.2'
   s.add_development_dependency 'rspec',                     '~> 3.1'
-  s.add_development_dependency 'rubocop',                   '0.32.1'
+  s.add_development_dependency 'rubocop',                   '~> 0.37'
   s.add_development_dependency 'yard',                      '~> 0.8'
 end
