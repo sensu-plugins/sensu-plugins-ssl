@@ -87,16 +87,16 @@ class CheckSSLQualys < Sensu::Plugin::Check::CLI
          proc: proc { |t| t.to_i },
          default: 10
 
-  def ssl_api_request(fromCache)
+  def ssl_api_request(from_cache)
     params = { host: config[:domain] }
-    params[:startNew] = 'on' unless fromCache
+    params[:startNew] = 'on' unless from_cache
     r = RestClient.get("#{config[:api_url]}analyze", params: params)
     warning "HTTP#{r.code} recieved from API" unless r.code == 200
     JSON.parse(r.body)
   end
 
-  def ssl_check(fromCache)
-    json = ssl_api_request(fromCache)
+  def ssl_check(from_cache)
+    json = ssl_api_request(from_cache)
     warning "ERROR on #{config[:domain]} check" if json['status'] == 'ERROR'
     json
   end

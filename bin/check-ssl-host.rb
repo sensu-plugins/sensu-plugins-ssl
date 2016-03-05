@@ -102,7 +102,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
   end
 
   def handle_starttls(proto, socket)
-    if STARTTLS_PROTOS.include?(proto)
+    if STARTTLS_PROTOS.include?(proto) # rubocop:disable Style/GuardClause
       send("starttls_#{proto}", socket)
     else
       raise ArgumentError, "STARTTLS supported only for #{STARTTLS_PROTOS.join(', ')}"
