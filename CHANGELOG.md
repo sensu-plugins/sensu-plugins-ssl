@@ -33,7 +33,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.4...HEAD
+[unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.6...HEAD
+[0.0.6]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.5...0.0.6
 [0.0.5]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.3...0.0.4
 [0.0.3]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.2...0.0.3

@@ -42,7 +42,7 @@ require 'socket'
 # Check SSL Host
 #
 class CheckSSLHost < Sensu::Plugin::Check::CLI
-  STARTTLS_PROTOS = %w(smtp)
+  STARTTLS_PROTOS = %w(smtp).freeze
 
   check_name 'check_ssl_host'
 
@@ -105,20 +105,20 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
     if STARTTLS_PROTOS.include?(proto)
       send("starttls_#{proto}", socket)
     else
-      fail ArgumentError, "STARTTLS supported only for #{STARTTLS_PROTOS.join(', ')}"
+      raise ArgumentError, "STARTTLS supported only for #{STARTTLS_PROTOS.join(', ')}"
     end
   end
 
   def starttls_smtp(socket)
     status = socket.readline
-    unless /^220 /.match(status)
+    unless /^220 / =~ status
       critical "#{config[:host]} - did not receive initial SMTP 220"
       # no fall-through
     end
     socket.puts 'STARTTLS'
 
     status = socket.readline
-    return if /^220 /.match(status)
+    return if /^220 / =~ status
     critical "#{config[:host]} - did not receive SMTP 220 in response to STARTTLS"
   end
 
