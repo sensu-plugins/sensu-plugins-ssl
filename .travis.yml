@@ -24,7 +24,7 @@ deploy:
     secure: Kr0fckXoukenIVyWMFVYAi+llLNNKRtfnZatnGDgqQON+vRXuuLGnta2TyBEhmPdiRU8nax5VL3K5uNSkxWmPi7Vtzizz453KShtnFGXuq73H37WIvcJ4bLcvz5K/1RWNEcXMN7/6hgSeDBUzcliFyph4p00WhdhqgFttf0UI/Y=
   gem: sensu-plugins-ssl
   on:
-    ags: true
+    tags: true
     all_branches: true
     rvm: 1.9.3
     rvm: 2.0
