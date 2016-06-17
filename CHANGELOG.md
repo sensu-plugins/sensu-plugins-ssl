@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 ### Changed
 - Updated Rubocop to 0.40, applied auto-correct
+- Loosened dependency on sensu-plugin from `= 1.2.0` to `~> 1.2`
 - Changed permissions on check-ssl-qualys.rb to ensure it is executable
 
 ### Added
