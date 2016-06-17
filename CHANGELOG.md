@@ -3,6 +3,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
+## [Unreleased]
+### Changed
+- Updated Rubocop to 0.40, applied auto-correct
+- Changed permissions on check-ssl-qualys.rb to ensure it is executable
+
+### Added
+- check-ssl-cert.rb: Added optional `servername` configuration for specifying an SNI which may differ from the host
+
+### Removed
+- Removed Ruby 1.9.3 support; add Ruby 2.3.0 support to testing matrix
+
 ## [0.0.6] - 2015-08-18
 ### Fixed
 - Added rest-client to the gemspec
