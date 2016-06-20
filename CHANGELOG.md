@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+
+## [1.0.0]
 ### Changed
 - Updated Rubocop to 0.40, applied auto-correct
 - Loosened dependency on sensu-plugin from `= 1.2.0` to `~> 1.2`
@@ -45,7 +47,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.6...HEAD
+[unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.0.0...HEAD
+[1.0.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.6...1.0.0
 [0.0.6]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.5...0.0.6
 [0.0.5]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.4...0.0.5
 [0.0.4]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.3...0.0.4
