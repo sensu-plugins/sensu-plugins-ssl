@@ -5,6 +5,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+### Added
+- check-ssl-host.rb: Added optional `address` command line parameter for specifying the address of the server to
+                     connect to, to override the `hostname` parameter (which is still used for verification/SNI)
+
 ## [1.0.0]
 ### Changed
 - Updated Rubocop to 0.40, applied auto-correct
