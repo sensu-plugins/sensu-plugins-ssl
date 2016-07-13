@@ -62,7 +62,8 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
          default: 14
 
   option :host,
-         description: 'Hostname of server to check',
+         description: 'Hostname of the server certificate to check, by default used as the server address if none ' \
+                      'is given',
          short: '-h',
          long: '--host HOST',
          required: true
@@ -72,6 +73,12 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
          short: '-p',
          long: '--port PORT',
          default: 443
+
+  option :address,
+         description: 'Address of server to check. This is used instead of the host argument for the TCP connection, ' \
+                      'however the server hostname is still used for the TLS/SSL context.',
+         short: '-a',
+         long: '--address ADDRESS'
 
   option :skip_hostname_verification,
          description: 'Disables hostname verification',
@@ -88,13 +95,16 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
                       "(#{STARTTLS_PROTOS.join(', ')})",
          long: '--starttls PROTO'
 
-  def get_cert_chain(host, port)
-    tcp_client = TCPSocket.new(host, port)
+  def get_cert_chain(host, port, address)
+    tcp_client = TCPSocket.new(address ? address : host, port)
     handle_starttls(config[:starttls], tcp_client) if config[:starttls]
     ssl_context = OpenSSL::SSL::SSLContext.new
     ssl_client = OpenSSL::SSL::SSLSocket.new(tcp_client, ssl_context)
-    # SNI
+
+    # If the OpenSSL version in use supports Server Name Indication (SNI, RFC 3546), then we set the hostname we
+    # received to request that certificate.
     ssl_client.hostname = host if ssl_client.respond_to? :hostname=
+
     ssl_client.connect
     certs = ssl_client.peer_cert_chain
     ssl_client.close
@@ -154,7 +164,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
   end
 
   def run
-    chain = get_cert_chain(config[:host], config[:port])
+    chain = get_cert_chain(config[:host], config[:port], config[:address])
     verify_hostname(chain[0]) unless config[:skip_hostname_verification]
     verify_certificate_chain(chain) unless config[:skip_chain_verification]
     verify_expiry(chain[0])
