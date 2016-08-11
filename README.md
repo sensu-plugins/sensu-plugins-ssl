@@ -9,6 +9,7 @@
 ## Functionality
 
 ## Files
+ * bin/check-java-keystore-cert.rb
  * bin/check-ssl-cert.rb
  * bin/check-ssl-host.rb
  * bin/check-ssl-qualys.rb
