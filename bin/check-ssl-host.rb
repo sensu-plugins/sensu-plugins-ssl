@@ -42,7 +42,7 @@ require 'socket'
 # Check SSL Host
 #
 class CheckSSLHost < Sensu::Plugin::Check::CLI
-  STARTTLS_PROTOS = %w(smtp).freeze
+  STARTTLS_PROTOS = %w(smtp imap).freeze
 
   check_name 'check_ssl_host'
 
@@ -130,6 +130,18 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
     status = socket.readline
     return if /^220 / =~ status
     critical "#{config[:host]} - did not receive SMTP 220 in response to STARTTLS"
+  end
+
+  def starttls_imap(socket)
+    status = socket.readline
+    unless /^* OK / =~ status
+      critical "#{config[:host]} - did not receive initial * OK"
+    end
+    socket.puts 'a001 STARTTLS'
+
+    status = socket.readline
+    return if /^a001 OK Begin TLS negotiation now/ =~ status
+    critical "#{config[:host]} - did not receive OK Begin TLS negotiation now"
   end
 
   def verify_expiry(cert)
