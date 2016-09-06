@@ -176,9 +176,13 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
   end
 
   def run
-    chain = get_cert_chain(config[:host], config[:port], config[:address])
-    verify_hostname(chain[0]) unless config[:skip_hostname_verification]
-    verify_certificate_chain(chain) unless config[:skip_chain_verification]
-    verify_expiry(chain[0])
+    begin
+      chain = get_cert_chain(config[:host], config[:port], config[:address])
+      verify_hostname(chain[0]) unless config[:skip_hostname_verification]
+      verify_certificate_chain(chain) unless config[:skip_chain_verification]
+      verify_expiry(chain[0])
+    rescue Errno::ECONNRESET => e
+      critical "#{e.class} - #{e.message}"
+    end
   end
 end
