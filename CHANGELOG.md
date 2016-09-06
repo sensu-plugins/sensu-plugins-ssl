@@ -8,6 +8,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - check-ssl-host.rb: Added optional `address` command line parameter for specifying the address of the server to
                      connect to, to override the `hostname` parameter (which is still used for verification/SNI)
+
+                     Better error message when unable to connect to target host
+
 - check-java-keystore-cert.rb: Add new check to verify a certificate in a Java Keystore has not expired.
 
 - check-ssl-host.rb: Basic IMAP STARTTLS negotiation
