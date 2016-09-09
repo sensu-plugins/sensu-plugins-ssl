@@ -180,5 +180,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
     verify_hostname(chain[0]) unless config[:skip_hostname_verification]
     verify_certificate_chain(chain) unless config[:skip_chain_verification]
     verify_expiry(chain[0])
+  rescue Errno::ECONNRESET => e
+    critical "#{e.class} - #{e.message}"
   end
 end
