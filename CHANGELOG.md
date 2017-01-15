@@ -15,6 +15,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 - check-ssl-host.rb: Basic IMAP STARTTLS negotiation
 
+- check-ssl-crl.rb: Test for expiring CRL
+
 ## [1.0.0]
 ### Changed
 - Updated Rubocop to 0.40, applied auto-correct

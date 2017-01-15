@@ -6,6 +6,8 @@ require 'rubocop/rake_task'
 require 'yard'
 require 'yard/rake/yardoc_task'
 
+ENV['TZ'] = 'CET'
+
 args = [:spec, :make_bin_executable, :yard, :rubocop, :check_binstubs]
 
 YARD::Rake::YardocTask.new do |t|

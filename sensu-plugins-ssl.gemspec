@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.date                   = Date.today.to_s
   s.description            = 'This plugin provides native SSL instrumentation
                               for monitoring, including: hostname and chain
-                              verification, cert expiry, and Qualys SSL Labs reporting'
+                              verification, cert and crl expiry, and Qualys SSL Labs reporting'
   s.email                  = '<sensu-users@googlegroups.com>'
   s.executables            = Dir.glob('bin/**/*.rb').map { |file| File.basename(file) }
   s.files                  = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md CHANGELOG.md)
