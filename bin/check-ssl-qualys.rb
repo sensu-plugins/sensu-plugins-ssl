@@ -90,8 +90,12 @@ class CheckSSLQualys < Sensu::Plugin::Check::CLI
   def ssl_api_request(from_cache)
     params = { host: config[:domain] }
     params[:startNew] = 'on' unless from_cache
-    r = RestClient.get("#{config[:api_url]}analyze", params: params)
-    warning "HTTP#{r.code} recieved from API" unless r.code == 200
+    begin
+      r = RestClient.get("#{config[:api_url]}analyze", params: params)
+      warning "HTTP#{r.code} recieved from API" unless r.code == 200
+    rescue RestClient::ExceptionWithResponse => e
+      unknown e.response
+    end
     JSON.parse(r.body)
   end
 

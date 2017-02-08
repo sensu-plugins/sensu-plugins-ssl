@@ -15,6 +15,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 - check-ssl-host.rb: Basic IMAP STARTTLS negotiation
 
+- check-ssl-qualys.rb: Handle API errors with status unknow instead of unhandled "Check failed to run".
+
 ## [1.0.0]
 ### Changed
 - Updated Rubocop to 0.40, applied auto-correct
