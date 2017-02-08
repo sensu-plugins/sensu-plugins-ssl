@@ -126,6 +126,10 @@ class CheckSSLQualys < Sensu::Plugin::Check::CLI
 
   def run
     grade = lowest_grade
+    if !grade
+      message "#{config[:domain]} not rated"
+      critical
+    end
     message "#{config[:domain]} rated #{grade}"
     grade_rank = GRADE_OPTIONS.index(grade)
     if grade_rank > config[:critical]
