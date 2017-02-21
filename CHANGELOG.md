@@ -12,12 +12,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
                      Better error message when unable to connect to target host
 
 - check-java-keystore-cert.rb: Add new check to verify a certificate in a Java Keystore has not expired.
-
 - check-ssl-host.rb: Basic IMAP STARTTLS negotiation
-
 - check-ssl-qualys.rb: Handle API errors with status unknow instead of unhandled "Check failed to run".
-
 - check-ssl-qualys.rb: Handle nil grade_rank as critical not rated
+
 
 ## [1.0.0]
 ### Changed
