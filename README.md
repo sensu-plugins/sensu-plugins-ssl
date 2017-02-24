@@ -1,6 +1,6 @@
-## Sensu-Plugins-ssl
+## Sensu-Plugins-SSL
 
-[ ![Build Status](https://travis-ci.org/sensu-plugins/sensu-plugins-ssl.svg?branch=master)](https://travis-ci.org/sensu-plugins/sensu-plugins-ssl)
+[![Build Status](https://travis-ci.org/sensu-plugins/sensu-plugins-ssl.svg?branch=master)](https://travis-ci.org/sensu-plugins/sensu-plugins-ssl)
 [![Gem Version](https://badge.fury.io/rb/sensu-plugins-ssl.svg)](http://badge.fury.io/rb/sensu-plugins-ssl)
 [![Code Climate](https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl/badges/gpa.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl)
 [![Test Coverage](https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl/badges/coverage.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-ssl)
@@ -10,11 +10,30 @@
 
 ## Files
  * bin/check-java-keystore-cert.rb
+ * bin/check-ssl-crl.rb
  * bin/check-ssl-cert.rb
  * bin/check-ssl-host.rb
  * bin/check-ssl-qualys.rb
 
 ## Usage
+
+### `bin/check-ssl-crl.rb`
+
+Checks a CRL has not or is not expiring by inspecting it's next update value.
+
+You can check against a CRL file on disk:
+
+```
+./bin/check-ssl-crl -c 300 -w 600 -u /path/to/crl
+```
+
+or an online CRL:
+
+```
+./bin/check-ssl-crl -c 300 -w 600 -u http://www.website.com/file.crl
+```
+
+Critical and Warning thresholds are specified in minutes.
 
 ## Installation
 
