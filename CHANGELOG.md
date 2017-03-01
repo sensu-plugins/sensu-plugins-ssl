@@ -6,18 +6,17 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 
 ### Added
-- check-ssl-host.rb: Added optional `address` command line parameter for specifying the address of the server to
-                     connect to, to override the `hostname` parameter (which is still used for verification/SNI)
+- `check-ssl-host.rb`: Add optional `address` command line parameter for specifying the address of the server to
+   connect to, to override the `hostname` parameter (which is still used for verification/SNI) (@advance512)
+- `check-ssl-host.rb`: Better error message when unable to connect to target host (@johntdyer)
+- `check-ssl-host.rb`: Add support for client certificates (@modax)
+- `check-ssl-host.rb`: Add basic IMAP STARTTLS negotiation (@lobeck)
+- `check-java-keystore-cert.rb`: Add new check to verify a certificate in a Java Keystore has not expired. (@joerayme)
+- `check-ssl-crl.rb`: Add check for expiring CRL (@shoekstra)
 
-                     Better error message when unable to connect to target host
-
-- check-java-keystore-cert.rb: Add new check to verify a certificate in a Java Keystore has not expired.
-- check-ssl-host.rb: Basic IMAP STARTTLS negotiation
-- check-ssl-qualys.rb: Handle API errors with status unknow instead of unhandled "Check failed to run".
-- check-ssl-qualys.rb: Handle nil grade_rank as critical not rated
-
-
-- check-ssl-crl.rb: Test for expiring CRL
+### Fixed
+- `check-ssl-qualys.rb`: Handle API errors with status unknown instead of unhandled "Check failed to run". (@11mariom)
+- `check-ssl-qualys.rb`: Handle nil grade_rank as critical not rated (@11mariom)
 
 ## [1.0.0]
 ### Changed
