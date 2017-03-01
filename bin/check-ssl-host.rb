@@ -80,6 +80,14 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
          short: '-a',
          long: '--address ADDRESS'
 
+  option :client_cert,
+         description: 'Path to the client certificate in DER/PEM format',
+         long: '--client-cert CERT'
+
+  option :client_key,
+         description: 'Path to the client RSA key in DER/PEM format',
+         long: '--client-key KEY'
+
   option :skip_hostname_verification,
          description: 'Disables hostname verification',
          long: '--skip-hostname-verification',
@@ -95,10 +103,12 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
                       "(#{STARTTLS_PROTOS.join(', ')})",
          long: '--starttls PROTO'
 
-  def get_cert_chain(host, port, address)
+  def get_cert_chain(host, port, address, client_cert, client_key)
     tcp_client = TCPSocket.new(address ? address : host, port)
     handle_starttls(config[:starttls], tcp_client) if config[:starttls]
     ssl_context = OpenSSL::SSL::SSLContext.new
+    ssl_context.cert = OpenSSL::X509::Certificate.new File.read(client_cert) if client_cert
+    ssl_context.key = OpenSSL::PKey::RSA.new File.read(client_key) if client_key
     ssl_client = OpenSSL::SSL::SSLSocket.new(tcp_client, ssl_context)
 
     # If the OpenSSL version in use supports Server Name Indication (SNI, RFC 3546), then we set the hostname we
@@ -176,7 +186,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
   end
 
   def run
-    chain = get_cert_chain(config[:host], config[:port], config[:address])
+    chain = get_cert_chain(config[:host], config[:port], config[:address], config[:client_cert], config[:client_key])
     verify_hostname(chain[0]) unless config[:skip_hostname_verification]
     verify_certificate_chain(chain) unless config[:skip_chain_verification]
     verify_expiry(chain[0])
