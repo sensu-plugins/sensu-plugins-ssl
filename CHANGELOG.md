@@ -5,6 +5,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 
+## [1.1.0] - 2017-02-28
 ### Added
 - `check-ssl-host.rb`: Add optional `address` command line parameter for specifying the address of the server to
    connect to, to override the `hostname` parameter (which is still used for verification/SNI) (@advance512)
@@ -60,7 +61,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.0.0...HEAD
+[unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.6...1.0.0
 [0.0.6]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.5...0.0.6
 [0.0.5]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.4...0.0.5
