@@ -67,6 +67,16 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
          short: '-s',
          long: '--servername SERVER'
 
+  option :pkcs12,
+         description: 'Path to PKCS#12 certificate',
+         short: '-C',
+         long: '--cert P12'
+
+  option :pass,
+         description: 'Pass phrase for the private key in PKCS#12 certificate',
+         short: '-S',
+         long: '--pass '
+
   def ssl_cert_expiry
     `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
   end
@@ -75,18 +85,36 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
     OpenSSL::X509::Certificate.new(File.read config[:pem]).not_after # rubocop:disable Style/NestedParenthesizedCalls
   end
 
+  def ssl_pkcs12_expiry
+    `openssl pkcs12 -in #{config[:pkcs12]} -nokeys -nomacver -passin pass:"#{config[:pass]}" | openssl x509 -noout -enddate | grep -v MAC`.split('=').last
+  end
+
   def validate_opts
-    if !config[:pem]
+    if !config[:pem] and !config[:pkcs12]
       unknown 'Host and port required' unless config[:host] && config[:port]
     elsif config[:pem]
       unknown 'No such cert' unless File.exist? config[:pem]
+    elsif config[:pkcs12]
+      if !config[:pass]
+        unknown 'No pass phrase specified for PKCS#12 certificate'
+      else
+        unknown 'No such cert' unless File.exist? config[:pkcs12]
+      end
     end
     config[:servername] = config[:host] unless config[:servername]
   end
 
   def run
     validate_opts
-    expiry = config[:pem] ? ssl_pem_expiry : ssl_cert_expiry
+
+    if config[:pem]
+      expiry = ssl_pem_expiry
+    elsif config[:pkcs12]
+      expiry = ssl_pkcs12_expiry
+    else
+      expiry = ssl_cert_expiry
+    end
+
     days_until = (Date.parse(expiry.to_s) - Date.today).to_i
 
     if days_until < 0
