@@ -90,7 +90,7 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
   end
 
   def validate_opts
-    if !config[:pem] and !config[:pkcs12]
+    if !config[:pem] && !config[:pkcs12]
       unknown 'Host and port required' unless config[:host] && config[:port]
     elsif config[:pem]
       unknown 'No such cert' unless File.exist? config[:pem]
@@ -107,13 +107,13 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
   def run
     validate_opts
 
-    if config[:pem]
-      expiry = ssl_pem_expiry
-    elsif config[:pkcs12]
-      expiry = ssl_pkcs12_expiry
-    else
-      expiry = ssl_cert_expiry
-    end
+    expiry = if config[:pem]
+               ssl_pem_expiry
+             elsif config[:pkcs12]
+               ssl_pkcs12_expiry
+             else
+               ssl_cert_expiry
+             end
 
     days_until = (Date.parse(expiry.to_s) - Date.today).to_i
 
