@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Changed
+- Loosen dependency on sensu-plugin from `~> 1.2` to `>= 1.2, < 3.0`
+
 ## [1.2.0] - 2017-05-17
 ### Changed
 - check-ssl-qualys.rb: removed dependency on rest-client so we don't need a c compiler (@baweaver)
