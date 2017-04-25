@@ -94,7 +94,7 @@ class CheckSSLQualys < Sensu::Plugin::Check::CLI
     uri.query = URI.encode_www_form(params)
     response  = Net::HTTP.get_response(uri)
 
-    warning "Bad response recieved from API" unless response.is_a?(Net::HTTPSuccess)
+    warning 'Bad response recieved from API' unless response.is_a?(Net::HTTPSuccess)
 
     JSON.parse(response.body)
   end
