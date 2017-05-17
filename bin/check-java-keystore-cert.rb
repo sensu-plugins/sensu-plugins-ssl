@@ -22,6 +22,7 @@
 #
 
 require 'date'
+require 'shellwords'
 require 'sensu-plugin/check/cli'
 
 class CheckJavaKeystoreCert < Sensu::Plugin::Check::CLI
@@ -53,9 +54,9 @@ class CheckJavaKeystoreCert < Sensu::Plugin::Check::CLI
          required: true
 
   def certificate_expiration_date
-    result = `keytool -keystore #{config[:path]} \
-                      -export -alias #{config[:alias]} \
-                      -storepass #{config[:password]} 2>&1 | \
+    result = `keytool -keystore #{Shellwords.escape(config[:path])} \
+                      -export -alias #{Shellwords.escape(config[:alias])} \
+                      -storepass #{Shellwords.escape(config[:password])} 2>&1 | \
               openssl x509 -enddate -inform der -noout 2>&1`
 
     # rubocop:disable Style/SpecialGlobalVars

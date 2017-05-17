@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+- `check-java-keystore-cert.rb`: Escape variables sent to shell on calls to keytool. (@rs-mrichmond)
+
 ## [1.2.0] - 2017-05-17
 ### Changed
 - check-ssl-qualys.rb: removed dependency on rest-client so we don't need a c compiler (@baweaver)
