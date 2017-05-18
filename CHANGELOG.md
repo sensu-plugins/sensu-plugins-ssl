@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+## [1.3.0] 2017-05-18
+### Changed
 - `check-java-keystore-cert.rb`: Escape variables sent to shell on calls to keytool. (@rs-mrichmond)
 
 ## [1.2.0] - 2017-05-17
@@ -66,7 +68,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.2.0...HEAD
+[unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.3.0...HEAD
+[1.2.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/0.0.6...1.0.0
