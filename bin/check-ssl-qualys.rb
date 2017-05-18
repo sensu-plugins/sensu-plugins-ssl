@@ -40,7 +40,6 @@
 #
 
 require 'sensu-plugin/check/cli'
-require 'rest-client'
 require 'json'
 
 # Checks a single DNS entry has a rating above a certain level
@@ -90,13 +89,14 @@ class CheckSSLQualys < Sensu::Plugin::Check::CLI
   def ssl_api_request(from_cache)
     params = { host: config[:domain] }
     params[:startNew] = 'on' unless from_cache
-    begin
-      r = RestClient.get("#{config[:api_url]}analyze", params: params)
-      warning "HTTP#{r.code} recieved from API" unless r.code == 200
-    rescue RestClient::ExceptionWithResponse => e
-      unknown e.response
-    end
-    JSON.parse(r.body)
+
+    uri       = URI("#{config[:api_url]}analyze")
+    uri.query = URI.encode_www_form(params)
+    response  = Net::HTTP.get_response(uri)
+
+    warning 'Bad response recieved from API' unless response.is_a?(Net::HTTPSuccess)
+
+    JSON.parse(response.body)
   end
 
   def ssl_check(from_cache)
