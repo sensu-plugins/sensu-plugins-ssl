@@ -18,7 +18,6 @@
 #
 # DEPENDENCIES:
 #   gem: sensu-plugin
-#   gem: rest-client
 #
 # USAGE:
 #   # Basic usage
@@ -41,6 +40,7 @@
 
 require 'sensu-plugin/check/cli'
 require 'json'
+require 'net/http'
 
 # Checks a single DNS entry has a rating above a certain level
 class CheckSSLQualys < Sensu::Plugin::Check::CLI

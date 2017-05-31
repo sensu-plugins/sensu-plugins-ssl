@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Fixed
+- `check-ssl-qualys.rb`: Fix missing `net/http` require that prevented the check from executing (@eheydrick)
+
 ## [1.3.0] 2017-05-18
 ### Changed
 - `check-java-keystore-cert.rb`: Escape variables sent to shell on calls to keytool. (@rs-mrichmond)
