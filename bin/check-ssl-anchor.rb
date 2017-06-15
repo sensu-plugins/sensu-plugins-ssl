@@ -16,7 +16,7 @@
 #
 # USAGE:
 #
-#   Check a specific website is chained to a specific root certificate (Let's Encrypt for instance)
+#   Check that a specific website is chained to a specific root certificate (Let's Encrypt for instance)
 #       ./check-ssl-anchor.rb \
 #           -u example.com \
 #           -a "i:/O=Digital Signature Trust Co./CN=DST Root CA X3"

@@ -10,12 +10,21 @@
 
 ## Files
  * bin/check-java-keystore-cert.rb
+ * bin/check-ssl-anchor.rb
  * bin/check-ssl-crl.rb
  * bin/check-ssl-cert.rb
  * bin/check-ssl-host.rb
  * bin/check-ssl-qualys.rb
 
 ## Usage
+
+### `bin/check-ssl-anchor.rb`
+
+Check that a specific website is chained to a specific root certificate (Let's Encrypt for instance).
+
+```
+./check-ssl-anchor.rb -u example.com -a "i:/O=Digital Signature Trust Co./CN=DST Root CA X3"
+```
 
 ### `bin/check-ssl-crl.rb`
 
