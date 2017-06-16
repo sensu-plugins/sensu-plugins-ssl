@@ -23,7 +23,7 @@
 Check that a specific website is chained to a specific root certificate (Let's Encrypt for instance).
 
 ```
-./check-ssl-anchor.rb -u example.com -a "i:/O=Digital Signature Trust Co./CN=DST Root CA X3"
+./bin/check-ssl-anchor.rb -u example.com -a "i:/O=Digital Signature Trust Co./CN=DST Root CA X3"
 ```
 
 ### `bin/check-ssl-crl.rb`
@@ -49,3 +49,5 @@ Critical and Warning thresholds are specified in minutes.
 [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
 
 ## Notes
+
+`bin/check-ssl-anchor.rb` and `bin/check-ssl-host.rb` would be good to run in combination with each other to test that the chain is anchored to a specific certificate and each certificate in the chain is correctly signed.
