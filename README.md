@@ -48,6 +48,14 @@ Critical and Warning thresholds are specified in minutes.
 
 [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
 
+## Testing
+
+To run the testing suite, you'll need to have a working `ruby` environment, `gem`, and `bundler` installed. We use `rake` to run the `rspec` tests automatically.
+
+    bundle install
+    bundle update
+    bundle exec rake
+
 ## Notes
 
 `bin/check-ssl-anchor.rb` and `bin/check-ssl-host.rb` would be good to run in combination with each other to test that the chain is anchored to a specific certificate and each certificate in the chain is correctly signed.

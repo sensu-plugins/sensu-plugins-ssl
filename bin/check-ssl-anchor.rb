@@ -76,13 +76,10 @@ class CheckSSLAnchor < Sensu::Plugin::Check::CLI
   def anchor_information
     data = `openssl s_client \
                 -connect #{config[:host]}:#{config[:port]} \
-                -servername #{config[:servername]} < /dev/null 2>&1 | \
-            awk '/Certificate chain/,/---/'`.split(/$/).map(&:strip)
+                -servername #{config[:servername]} < /dev/null 2>&1`.match(/Certificate chain(.*)---\nServer certificate/m)[1].split(/$/).map(&:strip)
     data = data.reject(&:empty?)
-    if data[0] == 'Certificate chain'
-      data.slice!(0)
-      data.slice!(-1)
-    else
+
+    unless data[0] =~ /0 s:\/CN=.*/m
       data = 'NOTOK'
     end
     data
