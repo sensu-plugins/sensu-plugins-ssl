@@ -10,12 +10,21 @@
 
 ## Files
  * bin/check-java-keystore-cert.rb
+ * bin/check-ssl-anchor.rb
  * bin/check-ssl-crl.rb
  * bin/check-ssl-cert.rb
  * bin/check-ssl-host.rb
  * bin/check-ssl-qualys.rb
 
 ## Usage
+
+### `bin/check-ssl-anchor.rb`
+
+Check that a specific website is chained to a specific root certificate (Let's Encrypt for instance).
+
+```
+./bin/check-ssl-anchor.rb -u example.com -a "i:/O=Digital Signature Trust Co./CN=DST Root CA X3"
+```
 
 ### `bin/check-ssl-crl.rb`
 
@@ -39,4 +48,14 @@ Critical and Warning thresholds are specified in minutes.
 
 [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
 
+## Testing
+
+To run the testing suite, you'll need to have a working `ruby` environment, `gem`, and `bundler` installed. We use `rake` to run the `rspec` tests automatically.
+
+    bundle install
+    bundle update
+    bundle exec rake
+
 ## Notes
+
+`bin/check-ssl-anchor.rb` and `bin/check-ssl-host.rb` would be good to run in combination with each other to test that the chain is anchored to a specific certificate and each certificate in the chain is correctly signed.

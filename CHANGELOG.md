@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- `check-ssl-anchor.rb`: Add check for a specific root certificate signature. (@pgporada)
+- `check-ssl-anchor_spec.rb`: Tests for the `check-ssl-anchor.rb` script (@pgporada)
+
 ## [1.3.1] - 2017-05-30
 ### Fixed
 - `check-ssl-qualys.rb`: Fix missing `net/http` require that prevented the check from executing (@eheydrick)
