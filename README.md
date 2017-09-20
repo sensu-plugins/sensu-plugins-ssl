@@ -14,6 +14,8 @@
  * bin/check-ssl-crl.rb
  * bin/check-ssl-cert.rb
  * bin/check-ssl-host.rb
+ * bin/check-ssl-hsts-preload.rb
+ * bin/check-ssl-hsts-preloadable.rb
  * bin/check-ssl-qualys.rb
 
 ## Usage
