@@ -6,6 +6,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 ### Added
 - Ruby 2.4.1 testing
+- `check-ssl-hsts-preload.rb`: Added check for testing preload status of HSTS
+- `check-ssl-hsts-preloadable.rb`: Added check for testing if a domain can be HSTS preloaded
 
 ## [1.4.0] - 2017-06-20
 ### Added
