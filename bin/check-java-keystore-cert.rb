@@ -56,8 +56,8 @@ class CheckJavaKeystoreCert < Sensu::Plugin::Check::CLI
   def certificate_expiration_date
     result = `keytool -keystore #{Shellwords.escape(config[:path])} \
                       -export -alias #{Shellwords.escape(config[:alias])} \
-                      -storepass #{Shellwords.escape(config[:password])} 2>&1 | \
-              openssl x509 -enddate -inform der -noout 2>&1`
+                      -storepass #{Shellwords.escape(config[:password])} -rfc 2>&1 | \
+              openssl x509 -enddate -noout 2>&1`
 
     # rubocop:disable Style/SpecialGlobalVars
     unknown 'could not get certificate from keystore' unless $?.success?
