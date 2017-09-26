@@ -1,16 +1,20 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
+This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
 ### Added
 - Ruby 2.4.1 testing
-- `check-ssl-hsts-preload.rb`: Added check for testing preload status of HSTS
-- `check-ssl-hsts-preloadable.rb`: Added check for testing if a domain can be HSTS preloaded
+- `check-ssl-hsts-preload.rb`: Added check for testing preload status of HSTS (@rwky)
+- `check-ssl-hsts-preloadable.rb`: Added check for testing if a domain can be HSTS preloaded (@rwky)
+
+### Changed
+- updated CHANGELOG guidelines location (@majormoses)
 
 ### Fixed
 - `check-java-keystore-cert.rb`: Export cert in PEM format to fix tests that broke going from Precise to Trusty travis workers (@eheydrick)
+- fixed spelling in github pr template (@majormoses)
 
 ## [1.4.0] - 2017-06-20
 ### Added
