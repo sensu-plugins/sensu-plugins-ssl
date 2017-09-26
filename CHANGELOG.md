@@ -9,6 +9,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - `check-ssl-hsts-preload.rb`: Added check for testing preload status of HSTS
 - `check-ssl-hsts-preloadable.rb`: Added check for testing if a domain can be HSTS preloaded
 
+### Fixed
+- `check-java-keystore-cert.rb`: Export cert in PEM format to fix tests that broke going from Precise to Trusty travis workers (@eheydrick)
+
 ## [1.4.0] - 2017-06-20
 ### Added
 - `check-ssl-anchor.rb`: Add check for a specific root certificate signature. (@pgporada)
