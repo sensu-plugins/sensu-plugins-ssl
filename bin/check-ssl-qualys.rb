@@ -56,7 +56,7 @@ class CheckSSLQualys < Sensu::Plugin::Check::CLI
   option :api_url,
          description: 'The URL of the API to run against',
          long: '--api-url URL',
-         default: 'https://api.ssllabs.com/api/v2/'
+         default: 'https://api.ssllabs.com/api/v3/'
 
   option :warn,
          short: '-w GRADE',
