@@ -46,6 +46,14 @@ or an online CRL:
 
 Critical and Warning thresholds are specified in minutes.
 
+### `bin/check-ssl-qualys.rb`
+
+Checks the ssllabs qualysis api for grade of your server, this check can be quite long so it should not be scheduled with a low interval and will probably need to adjust the check `timeout` options per the [check attributes spec](https://docs.sensu.io/sensu-core/1.2/reference/checks/#check-attributes) based on my tests you should expect this to take around 3 minutes.
+```
+./bin/check-ssl-qualys.rb -d google.com
+```
+
+
 ## Installation
 
 [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
