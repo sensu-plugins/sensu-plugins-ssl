@@ -28,3 +28,6 @@ RegexpLiteral:
 
 Style/Documentation:
   Enabled: false
+
+# AllCops:
+#   TargetRubyVersion: 2.0

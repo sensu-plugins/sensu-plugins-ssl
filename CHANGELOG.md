@@ -7,6 +7,16 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Fixed
 - `check-ssl-hsts-preloadable.rb`: Fixed testing warnings for if a domain can be HSTS preloaded (@rwky)
 
+### Breaking Changes
+- `check-ssl-qualys.rb`: when you submit a request with caching enabled it will return back a response including an eta key. Rather than sleeping for some arbitrary number of time we now use this key when its greater than `--between-checks` to wait before attempting the next attempt to query. If it is lower or not present we fall back to `--between-checks` (@majormoses)
+- `check-ssl-qualys.rb`: new `--timeout` parameter to short circuit slow apis (@majormoses)
+
+### Changed
+- `check-ssl-qualys.rb`: updated `--api-url` to default to `v3` but remains backwards compatible (@jhoblitt) (@majormoses)
+
+### Added
+`check-ssl-qualys.rb`: option `--debug` to enable debug logging (@majormoses)
+
 ## [1.5.0] - 2017-09-26
 ### Added
 - Ruby 2.4.1 testing
