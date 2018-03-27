@@ -4,9 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
-### Fixed
-- `check-ssl-hsts-preloadable.rb`: Fixed testing warnings for if a domain can be HSTS preloaded (@rwky)
 
+## [2.0.0] - 2018-03-27
 ### Breaking Changes
 - `check-ssl-qualys.rb`: when you submit a request with caching enabled it will return back a response including an eta key. Rather than sleeping for some arbitrary number of time we now use this key when its greater than `--between-checks` to wait before attempting the next attempt to query. If it is lower or not present we fall back to `--between-checks` (@majormoses)
 - `check-ssl-qualys.rb`: new `--timeout` parameter to short circuit slow apis (@majormoses)
@@ -16,6 +15,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ### Added
 `check-ssl-qualys.rb`: option `--debug` to enable debug logging (@majormoses)
+
+### Fixed
+- `check-ssl-hsts-preloadable.rb`: Fixed testing warnings for if a domain can be HSTS preloaded (@rwky)
 
 ## [1.5.0] - 2017-09-26
 ### Added
@@ -103,7 +105,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.5.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.5.0...2.0.0
 [1.5.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.3.1...1.4.0
 [1.3.1]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.3.0...1.3.1
