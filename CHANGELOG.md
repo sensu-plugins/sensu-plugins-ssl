@@ -4,10 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+- `check-ssl-qualys.rb`: Fixed typo and removed timeout `-t` short option replacing it with `--timeout` as per previous changelog. `-t` conflicts with the short option for `--time-between`
+- Fixed typo in changelog
 
 ## [2.0.0] - 2018-03-27
 ### Breaking Changes
-- `check-ssl-qualys.rb`: when you submit a request with caching enabled it will return back a response including an eta key. Rather than sleeping for some arbitrary number of time we now use this key when its greater than `--between-checks` to wait before attempting the next attempt to query. If it is lower or not present we fall back to `--between-checks` (@majormoses)
+- `check-ssl-qualys.rb`: when you submit a request with caching enabled it will return back a response including an eta key. Rather than sleeping for some arbitrary number of time we now use this key when its greater than `--time-between` to wait before attempting the next attempt to query. If it is lower or not present we fall back to `--time-between` (@majormoses)
 - `check-ssl-qualys.rb`: new `--timeout` parameter to short circuit slow apis (@majormoses)
 
 ### Changed

@@ -95,8 +95,8 @@ class CheckSSLQualys < Sensu::Plugin::Check::CLI
          default: 10
 
   option :timeout,
-         short: '-t SECONDS',
-         descriptions: 'the ammount of seconds that this is allowed to run for',
+         long: '--timeout SECONDS',
+         descriptions: 'the amount of seconds that this is allowed to run for',
          proc: proc(&:to_i),
          default: 300
 
