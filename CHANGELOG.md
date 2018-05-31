@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
+
+## [2.0.1] - 2018-05-30
+### Fixed
 - `check-ssl-qualys.rb`: Fixed typo and removed timeout `-t` short option replacing it with `--timeout` as per previous changelog. `-t` conflicts with the short option for `--time-between`
 - Fixed typo in changelog
 
@@ -107,7 +110,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/2.0.1...HEAD
+[2.0.1]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.5.0...2.0.0
 [1.5.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/1.3.1...1.4.0
