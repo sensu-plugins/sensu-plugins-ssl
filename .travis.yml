@@ -36,7 +36,7 @@ deploy:
     rvm: 2.4.1
     repo: sensu-plugins/sensu-plugins-ssl
 - provider: script
-    script: bonsai/ruby-runtime/travis-build-bonsai-assets.sh sensu-plugins-disk-checks
+    script: bonsai/ruby-runtime/travis-build-bonsai-assets.sh sensu-plugins-ssl
     skip_cleanup: true
     on:
       tags: true
