@@ -4,32 +4,35 @@ cache:
 install:
 - bundle install
 rvm:
-- 2.0
-- 2.1
-- 2.2
 - 2.3.0
 - 2.4.1
 notifications:
   email:
     recipients:
-    - sensu-plugin@sensu-plugins.io
+    - sensu-plugin@sensu-plugins.io	
     on_success: change
     on_failure: always
 script:
 - bundle exec rake default
 - gem build sensu-plugins-ssl.gemspec
 - gem install sensu-plugins-ssl-*.gem
+before_deploy:
+- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'"
 deploy:
-  provider: rubygems
+- provider: rubygems
   api_key:
     secure: Kr0fckXoukenIVyWMFVYAi+llLNNKRtfnZatnGDgqQON+vRXuuLGnta2TyBEhmPdiRU8nax5VL3K5uNSkxWmPi7Vtzizz453KShtnFGXuq73H37WIvcJ4bLcvz5K/1RWNEcXMN7/6hgSeDBUzcliFyph4p00WhdhqgFttf0UI/Y=
   gem: sensu-plugins-ssl
   on:
     tags: true
     all_branches: true
-    rvm: 2.0
-    rvm: 2.1
-    rvm: 2.2
     rvm: 2.3.0
     rvm: 2.4.1
     repo: sensu-plugins/sensu-plugins-ssl
+- provider: script
+  script: bonsai/ruby-runtime/travis-build-bonsai-assets.sh sensu-plugins-ssl
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    rvm: 2.4.1
