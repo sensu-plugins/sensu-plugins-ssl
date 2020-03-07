@@ -33,13 +33,13 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'sensu-plugin', '~> 4.0'
 
-  s.add_development_dependency 'bundler',                   '~> 1.7'
+  s.add_development_dependency 'bundler',                   '~> 2.1'
   s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
   s.add_development_dependency 'github-markup',             '~> 3.0'
   s.add_development_dependency 'pry',                       '~> 0.10'
-  s.add_development_dependency 'rake',                      '~> 12.3'
+  s.add_development_dependency 'rake',                      '~> 13.0'
   s.add_development_dependency 'redcarpet',                 '~> 3.2'
-  s.add_development_dependency 'rspec',                     '~> 3.1'
+  s.add_development_dependency 'rspec',                     '~> 3.4'
   s.add_development_dependency 'rubocop',                   '~> 0.40.0'
   s.add_development_dependency 'yard',                      '~> 0.8'
   s.add_development_dependency 'timecop',                   '~> 0.8.0'

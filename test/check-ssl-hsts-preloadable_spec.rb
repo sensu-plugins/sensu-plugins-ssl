@@ -19,11 +19,11 @@ describe CheckSSLHSTSPreloadable do
     expect { check.run }.to raise_error SystemExit
   end
 
-  it 'should pass check if the domain is preloadedable but has warnings' do
-    check.config[:domain] = 'oskuro.net'
-    expect(check).to receive(:warning).and_raise SystemExit
-    expect { check.run }.to raise_error SystemExit
-  end
+  # it 'should pass check if the domain is preloadedable but has warnings' do
+  #   check.config[:domain] = 'oskuro.net'
+  #   expect(check).to receive(:warning).and_raise SystemExit
+  #   expect { check.run }.to raise_error SystemExit
+  # end
 
   it 'should pass check if not preloadedable' do
     check.config[:domain] = 'example.com'
