@@ -10,6 +10,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - Travis build automation to generate Sensu Asset tarballs that can be used n conjunction with Sensu provided ruby runtime assets and the Bonsai Asset Index
 - Require latest sensu-plugin for [Sensu Go support](https://github.com/sensu-plugins/sensu-plugin#sensu-go-enablement)
+- `check-ssl-cert.rb`: Check expiration times for all certs in the chain, not just the leaf cert. Comodo/Sectigo intermediate certs expired recently, causing widespread panic, and so validation of all certs in the chain has become a concern.
 
 ## [2.0.1] - 2018-05-30
 ### Fixed
