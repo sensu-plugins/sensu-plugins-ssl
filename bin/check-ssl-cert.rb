@@ -78,7 +78,7 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
          long: '--pass '
 
   def ssl_cert_expiry(certnum)
-    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | awk 'BEGIN { certnum = -1; in_cert = 0; } /^-----BEGIN CERTIFICATE-----$/ { certnum++; if (certnum == #{certnum}) { in_cert = 1 } } in_cert == 1 { print } /^-----END CERTIFICATE-----$/ { in_cert = 0 }' | openssl x509 -text -noout 2> /dev/null | sed -n -e 's/^[[:space:]]\\+Subject: .*CN[[:space:]]*=[[:space:]]*//p' -e 's/^[[:space:]]\\+Not After[[:space:]]*:[[:space:]]*//p'`
+    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} -showcerts < /dev/null 2>&1 | awk 'BEGIN { certnum = -1; in_cert = 0; } /^-----BEGIN CERTIFICATE-----$/ { certnum++; if (certnum == #{certnum}) { in_cert = 1 } } in_cert == 1 { print } /^-----END CERTIFICATE-----$/ { in_cert = 0 }' | openssl x509 -text -noout 2> /dev/null | sed -n -e 's/^[[:space:]]\\+Subject: .*CN[[:space:]]*=[[:space:]]*//p' -e 's/^[[:space:]]\\+Not After[[:space:]]*:[[:space:]]*//p'`
   end
 
   def ssl_pem_expiry
