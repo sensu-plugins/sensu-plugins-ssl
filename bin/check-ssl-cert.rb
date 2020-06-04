@@ -124,7 +124,7 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
         elsif days_until < config[:warning].to_i
           warning "Cert '#{expiry[0]}' expires in #{days_until} days"
         end
-        i += 1
+        certnum += 1
       end
       ok "No certs in chain expiring soon"
     else
