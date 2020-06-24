@@ -7,7 +7,7 @@ describe CheckSSLAnchor do
   end
 
   let(:check) do
-    CheckSSLAnchor.new ['-h', 'philporada.com', '-a', 'i:/O=Digital Signature Trust Co./CN=DST Root CA X3']
+    CheckSSLAnchor.new ['-h', 'philporada.com', '-a', 'i:\/?O ?= ?Digital Signature Trust Co.,? ?\/?CN ?= ?DST Root CA X3', '-r']
   end
 
   it 'should pass check if the root anchor matches what the users -a flag' do
@@ -17,6 +17,7 @@ describe CheckSSLAnchor do
 
   it 'should pass check if the root anchor matches what the users -a flag' do
     check.config[:anchor] = 'testdata'
+    check.config[:regexp] = false
     expect(check).to receive(:critical).and_raise SystemExit
     expect { check.run }.to raise_error SystemExit
   end
