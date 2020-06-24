@@ -57,6 +57,14 @@ class CheckSSLAnchor < Sensu::Plugin::Check::CLI
          long: '--anchor ANCHOR_VAL',
          required: true
 
+  option :regexp,
+         description: 'Treat the anchor as a regexp',
+         short: '-r',
+         long: '--regexp',
+         default: false,
+         boolean: true,
+         required: false
+
   option :servername,
          description: 'Set the TLS SNI (Server Name Indication) extension',
          short: '-s',
@@ -79,7 +87,7 @@ class CheckSSLAnchor < Sensu::Plugin::Check::CLI
                 -servername #{config[:servername]} < /dev/null 2>&1`.match(/Certificate chain(.*)---\nServer certificate/m)[1].split(/$/).map(&:strip)
     data = data.reject(&:empty?)
 
-    unless data[0] =~ /0 s:\/CN=.*/m
+    unless data[0] =~ /0 s:\/?CN ?=.*/m
       data = 'NOTOK'
     end
     data
@@ -91,11 +99,22 @@ class CheckSSLAnchor < Sensu::Plugin::Check::CLI
     if data == 'NOTOK'
       critical 'An error was encountered while trying to retrieve the certificate chain.'
     end
-
-    if data[-1] == config[:anchor].to_s
-      ok 'Root anchor has been found.'
+    puts config[:regexp]
+    # rubocop:disable Style/IfInsideElse
+    if config[:regexp]
+      ra = Regexp.new(config[:anchor].to_s)
+      if data[-1] =~ ra
+        ok 'Root anchor has been found.'
+      else
+        critical 'Root anchor did not match regexp /' + config[:anchor].to_s + "/\nFound \"" + data[-1] + '" instead.'
+      end
     else
-      critical 'Root anchor did not match. Found "' + data[-1] + '" instead.'
+      if data[-1] == config[:anchor].to_s
+        ok 'Root anchor has been found.'
+      else
+        critical 'Root anchor did not match string "' + config[:anchor].to_s + "\"\nFound \"" + data[-1] + '" instead.'
+      end
     end
+    # rubocop:enable Style/IfInsideElse
   end
 end
