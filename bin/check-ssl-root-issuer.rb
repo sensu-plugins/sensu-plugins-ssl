@@ -30,8 +30,8 @@
 require 'sensu-plugin/check/cli'
 require 'openssl'
 require 'uri'
-require "net/http"
-require "net/https"
+require 'net/http'
+require 'net/https'
 
 #
 # Check root certificate has specified issuer name
@@ -64,20 +64,19 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
          default: 'RFC2253',
          required: false
 
-
   def validate_opts
     config[:issuer_format] = OpenSSL::X509::Name::RFC2253
-    config[:issuer_format] = OpenSSL::X509::Name::ONELINE if config[:format] == 'ONELINE' 
-    config[:issuer_format] = OpenSSL::X509::Name::COMPAT  if config[:format] == 'COMPAT' 
+    config[:issuer_format] = OpenSSL::X509::Name::ONELINE if config[:format] == 'ONELINE'
+    config[:issuer_format] = OpenSSL::X509::Name::COMPAT if config[:format] == 'COMPAT'
   end
 
   def validate_issuer(cert)
     issuer = cert.issuer.to_s(config[:issuer_format])
     if config[:regexp]
       ra = Regexp.new(config[:issuer].to_s)
-      return  issuer =~ ra
+      issuer =~ ra
     else
-      return issuer == config[:issuer].to_s
+      issuer == config[:issuer].to_s
     end
   end
 
@@ -91,38 +90,38 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
     http.cert_store.set_default_paths
     http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-    http.verify_callback = -> (verify_ok, store_context) {
-      root_cert=store_context.current_cert unless root_cert
-      pcert=store_context.current_cert
-      if ! verify_ok
-        failed_cert = store_context.current_cert
-        failed_cert_reason = [store_context.error, store_context.error_string] if store_context.error != 0
+    http.verify_callback = lambda { |verify_ok, store_context|
+      root_cert = store_context.current_cert unless root_cert
+      pcert = store_context.current_cert
+      unless verify_ok
+        @failed_cert = store_context.current_cert
+        @failed_cert_reason = [store_context.error, store_context.error_string] if store_context.error != 0
       end
       verify_ok
     }
-    http.start { }
-    return root_cert
+    http.start {}
+    root_cert
   end
 
   # Do the actual work and massage some data
 
   def run
-    failed_cert = nil
-    failed_cert_reason = "Unknown"
+    @fail_cert = nil
+    @failed_cert_reason = 'Unknown'
     validate_opts
     uri = URI.parse(config[:url])
-    critical "Url must be https"  if uri.scheme != 'https'
-    root_cert=find_root_cert(uri)
-    if failed_cert
-      msg = "Certificate verification failed.\n Reason: #{failed_cert_reason}"
+    critical 'Url must be https' if uri.scheme != 'https'
+    root_cert = find_root_cert(uri)
+    if @failed_cert
+      msg = "Certificate verification failed.\n Reason: #{@failed_cert_reason}"
       critical msg
     end
 
     if validate_issuer(root_cert)
-      msg = "Root certificate in chain has expected issuer name"
+      msg = 'Root certificate in chain has expected issuer name'
       ok msg
     else
-      msg = "Root certificate issuer did not match expected name.\nFound: \"#{root_cert.issuer.to_s(config[:issuer_format])}\"" 
+      msg = "Root certificate issuer did not match expected name.\nFound: \"#{root_cert.issuer.to_s(config[:issuer_format])}\""
       critical msg
     end
   end
