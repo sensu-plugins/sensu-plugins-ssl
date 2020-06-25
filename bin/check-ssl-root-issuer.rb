@@ -73,15 +73,15 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
   def validate_issuer(cert)
     issuer = cert.issuer.to_s(config[:issuer_format])
     if config[:regexp]
-      ra = Regexp.new(config[:issuer].to_s)
-      issuer =~ ra
+      issuer_regexp = Regexp.new(config[:issuer].to_s)
+      issuer =~ issuer_regexp
     else
       issuer == config[:issuer].to_s
     end
   end
 
   def find_root_cert(uri)
-    pcert = root_cert = nil
+    root_cert = nil
     http = Net::HTTP.new(uri.host, uri.port)
     http.open_timeout = 10
     http.read_timeout = 10
@@ -92,7 +92,6 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
 
     http.verify_callback = lambda { |verify_ok, store_context|
       root_cert = store_context.current_cert unless root_cert
-      pcert = store_context.current_cert
       unless verify_ok
         @failed_cert = store_context.current_cert
         @failed_cert_reason = [store_context.error, store_context.error_string] if store_context.error != 0
@@ -110,7 +109,7 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
     @failed_cert_reason = 'Unknown'
     validate_opts
     uri = URI.parse(config[:url])
-    critical 'Url must be https' if uri.scheme != 'https'
+    critical "url protocol must be https, you specified #{url}" if uri.scheme != 'https'
     root_cert = find_root_cert(uri)
     if @failed_cert
       msg = "Certificate verification failed.\n Reason: #{@failed_cert_reason}"
