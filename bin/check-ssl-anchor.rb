@@ -102,8 +102,8 @@ class CheckSSLAnchor < Sensu::Plugin::Check::CLI
     puts config[:regexp]
     # rubocop:disable Style/IfInsideElse
     if config[:regexp]
-      ra = Regexp.new(config[:anchor].to_s)
-      if data[-1] =~ ra
+      anchor_regexp = Regexp.new(config[:anchor].to_s)
+      if data[-1] =~ anchor_regexp
         ok 'Root anchor has been found.'
       else
         critical 'Root anchor did not match regexp /' + config[:anchor].to_s + "/\nFound \"" + data[-1] + '" instead.'
