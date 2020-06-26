@@ -58,20 +58,19 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
          required: false
 
   option :format,
-         description: 'optional issuer name format. Defaults to RFC2253. Allowed values: RFC2253, ONELINE, COMPAT',
+         description: 'optional issuer name format.',
          short: '-f',
          long: '--format FORMAT_VAL',
          default: 'RFC2253',
+         in: ['RFC2253','ONELINE','COMPAT'], 
          required: false
 
-  def validate_opts
-    config[:issuer_format] = OpenSSL::X509::Name::RFC2253
-    config[:issuer_format] = OpenSSL::X509::Name::ONELINE if config[:format] == 'ONELINE'
-    config[:issuer_format] = OpenSSL::X509::Name::COMPAT if config[:format] == 'COMPAT'
+  def cert_name_format(format)
+    eval "OpenSSL::X509::Name::#{format}"
   end
 
   def validate_issuer(cert)
-    issuer = cert.issuer.to_s(config[:issuer_format])
+    issuer = cert.issuer.to_s(cert_name_format(config[:format]))
     if config[:regexp]
       issuer_regexp = Regexp.new(config[:issuer].to_s)
       issuer =~ issuer_regexp
@@ -107,7 +106,6 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
   def run
     @fail_cert = nil
     @failed_cert_reason = 'Unknown'
-    validate_opts
     uri = URI.parse(config[:url])
     critical "url protocol must be https, you specified #{url}" if uri.scheme != 'https'
     root_cert = find_root_cert(uri)
