@@ -62,15 +62,16 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
          short: '-f',
          long: '--format FORMAT_VAL',
          default: 'RFC2253',
-         in: ['RFC2253','ONELINE','COMPAT'], 
+         in: %w('RFC2253', 'ONELINE', 'COMPAT'),
          required: false
 
-  def cert_name_format(format)
-    eval "OpenSSL::X509::Name::#{format}"
+  def cert_name_format
+    # Note: because format argument is pre-validated by mixin 'in' logic eval is safe to use
+    eval "OpenSSL::X509::Name::#{config[:format]}" # rubocop:disable Lint/Eval
   end
 
   def validate_issuer(cert)
-    issuer = cert.issuer.to_s(cert_name_format(config[:format]))
+    issuer = cert.issuer.to_s(cert_name_format)
     if config[:regexp]
       issuer_regexp = Regexp.new(config[:issuer].to_s)
       issuer =~ issuer_regexp
