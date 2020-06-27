@@ -18,7 +18,6 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ### Fixed
 - ssl-anchor test now uses regexp
->>>>>>> master
 
 ## [2.0.1] - 2018-05-30
 ### Fixed
