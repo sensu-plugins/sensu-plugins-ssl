@@ -11,6 +11,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Travis build automation to generate Sensu Asset tarballs that can be used n conjunction with Sensu provided ruby runtime assets and the Bonsai Asset Index
 - Require latest sensu-plugin for [Sensu Go support](https://github.com/sensu-plugins/sensu-plugin#sensu-go-enablement)
 - New option to treat anchor argument as a regexp
+- New Check plugin `check-ssl-root-issuer.rb` with alternative logic for trust anchor verification.
 
 ### Changed
 - `check-ssl-anchor.rb` uses regexp to test for present of certificates in cert chain that works with both openssl 1.0 and 1.1 formatting
