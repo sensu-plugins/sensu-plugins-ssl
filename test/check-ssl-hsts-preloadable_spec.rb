@@ -19,11 +19,18 @@ describe CheckSSLHSTSPreloadable do
     expect { check.run }.to raise_error SystemExit
   end
 
-  it 'should pass check if the domain is preloadedable but has warnings' do
-    check.config[:domain] = 'oskuro.net'
-    expect(check).to receive(:warning).and_raise SystemExit
-    expect { check.run }.to raise_error SystemExit
-  end
+  ##
+  # Disabled 2020/06/24 JDS
+  # Reason:  the hsts-preloadable check depends on a domain lookup from https://hstspreload.org/
+  #          There's no way to assure that an indexed domain at hstspreload.org will have a warning
+  #          The previously tested domain 'oskuro.net' no longer issues a warning
+  #          as its now incompliance with the hsts preload requirements.
+  ##
+  #  it 'should pass check if the domain is preloadedable but has warnings' do
+  #    check.config[:domain] = 'oskuro.net'
+  #    expect(check).to receive(:warning).and_raise SystemExit
+  #    expect { check.run }.to raise_error SystemExit
+  #  end
 
   it 'should pass check if not preloadedable' do
     check.config[:domain] = 'example.com'

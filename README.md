@@ -20,12 +20,13 @@ The Sensu assets packaged from this repository are built against the Sensu Ruby 
  * bin/check-ssl-hsts-preload.rb
  * bin/check-ssl-hsts-preloadable.rb
  * bin/check-ssl-qualys.rb
+ * bin/check-ssl-root-issuer.rb
 
 ## Usage
 
 ### `bin/check-ssl-anchor.rb`
 
-Check that a specific website is chained to a specific root certificate (Let's Encrypt for instance).
+Check that a specific website is chained to a specific root certificate (Let's Encrypt for instance). Requires the `openssl` commandline tool to be available on the system.
 
 ```
 ./bin/check-ssl-anchor.rb -u example.com -a "i:/O=Digital Signature Trust Co./CN=DST Root CA X3"
@@ -56,6 +57,13 @@ Checks the ssllabs qualysis api for grade of your server, this check can be quit
 ./bin/check-ssl-qualys.rb -d google.com
 ```
 
+### `bin/check-ssl-root-issuer.rb`
+
+Check that a specific website is chained to a specific root certificate issuer. This is a pure Ruby implementation, does not require the openssl cmdline client tool to be installed.
+
+```
+./bin/check-ssl-root-issuer.rb -u example.com -a "CN=DST Root CA X3,O=Digital Signature Trust Co."
+```
 
 ## Installation
 
