@@ -14,6 +14,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 - Require latest sensu-plugin for [Sensu Go support](https://github.com/sensu-plugins/sensu-plugin#sensu-go-enablement)
 - New option to treat anchor argument as a regexp
 - New Check plugin `check-ssl-root-issuer.rb` with alternative logic for trust anchor verification.
+- `check-ssl-cert.rb`: Check expiration times for all certs in the chain, not just the leaf cert. Comodo/Sectigo intermediate certs expired recently, causing widespread panic, and so validation of all certs in the chain has become a concern.
 
 ### Changed
 - `check-ssl-anchor.rb` uses regexp to test for present of certificates in cert chain that works with both openssl 1.0 and 1.1 formatting

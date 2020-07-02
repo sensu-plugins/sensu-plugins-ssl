@@ -77,8 +77,13 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
          short: '-S',
          long: '--pass '
 
-  def ssl_cert_expiry
-    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
+  def ssl_cert_expiry(certnum)
+    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} -showcerts < /dev/null 2> /dev/null | \
+     awk 'BEGIN { certnum = -1; in_cert = 0; }
+     /^-----BEGIN CERTIFICATE-----$/ { certnum++; if (certnum == #{certnum}) { in_cert = 1 } }
+     in_cert == 1 { print }
+     /^-----END CERTIFICATE-----$/ { in_cert = 0 }' | openssl x509 -text -noout 2> /dev/null | \
+     sed -n -e 's/^[[:space:]]\\+Subject: .*CN[[:space:]]*=[[:space:]]*//p' -e 's/^[[:space:]]\\+Not After[[:space:]]*:[[:space:]]*//p'`
   end
 
   def ssl_pem_expiry
@@ -107,24 +112,44 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
   def run
     validate_opts
 
-    expiry = if config[:pem]
-               ssl_pem_expiry
-             elsif config[:pkcs12]
-               ssl_pkcs12_expiry
-             else
-               ssl_cert_expiry
-             end
+    if !config[:pem] && !config[:pkcs12]
+      certnum = 0
+      loop do
+        expiry = ssl_cert_expiry(certnum)
 
-    days_until = (Date.parse(expiry.to_s) - Date.today).to_i
+        break if expiry == ''
+        expiry = expiry.split(/\n/)
 
-    if days_until < 0
-      critical "Expired #{days_until.abs} days ago"
-    elsif days_until < config[:critical].to_i
-      critical "#{days_until} days left"
-    elsif days_until < config[:warning].to_i
-      warning "#{days_until} days left"
+        days_until = (Date.parse(expiry[0].to_s) - Date.today).to_i
+
+        if days_until < 0
+          critical "Cert '#{expiry[1]}' expired #{days_until.abs} days ago"
+        elsif days_until < config[:critical].to_i
+          critical "Cert '#{expiry[1]}' expires in #{days_until} days"
+        elsif days_until < config[:warning].to_i
+          warning "Cert '#{expiry[1]}' expires in #{days_until} days"
+        end
+        certnum += 1
+      end
+      ok 'No certs in chain expiring soon'
     else
-      ok "#{days_until} days left"
+      expiry = if config[:pem]
+                 ssl_pem_expiry
+               elsif config[:pkcs12]
+                 ssl_pkcs12_expiry
+               end
+
+      days_until = (Date.parse(expiry.to_s) - Date.today).to_i
+
+      if days_until < 0
+        critical "Expired #{days_until.abs} days ago"
+      elsif days_until < config[:critical].to_i
+        critical "#{days_until} days left"
+      elsif days_until < config[:warning].to_i
+        warning "#{days_until} days left"
+      else
+        ok "#{days_until} days left"
+      end
     end
   end
 end
