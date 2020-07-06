@@ -5,6 +5,7 @@ before_install:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
 install:
 - bundle install
+- bundle update
 rvm:
 - 2.5.8
 notifications:
