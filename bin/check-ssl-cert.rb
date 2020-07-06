@@ -114,11 +114,9 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
     end
     config[:servername] = config[:host] unless config[:servername]
 
-    if config[:starttls]
-      @starttls_supported_protocols = %w[smtp pop3 imap ftp xmpp xmpp-server irc postgres mysql lmtp nntp sieve ldap]
-      unless @starttls_supported_protocols.include? config[:starttls]
-        unknown "Unsupported StartTLS protocol #{config[:starttls]}"
-      end
+    @starttls_supported_protocols = %w[smtp pop3 imap ftp xmpp xmpp-server irc postgres mysql lmtp nntp sieve ldap]
+    unless @starttls_supported_protocols.include?(config[:starttls])
+      unknown "Unsupported StartTLS protocol #{config[:starttls]}" if config[:starttls]
     end
   end
 
