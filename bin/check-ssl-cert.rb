@@ -115,7 +115,7 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
     config[:servername] = config[:host] unless config[:servername]
 
     @starttls_supported_protocols = %w[smtp pop3 imap ftp xmpp xmpp-server irc postgres mysql lmtp nntp sieve ldap]
-    unless @starttls_supported_protocols.include?(config[:starttls])
+    unless @starttls_supported_protocols.include?(config[:starttls]) # rubocop: disable Style/GuardClause
       unknown "Unsupported StartTLS protocol #{config[:starttls]}" if config[:starttls]
     end
   end

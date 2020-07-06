@@ -8,7 +8,7 @@ before_install:
 install:
 - bundle install
 rvm:
-- 2.4.1
+- 2.5.8
 notifications:
   email:
     recipients:
@@ -29,7 +29,7 @@ deploy:
   on:
     tags: true
     all_branches: true
-    rvm: 2.4.1
+    rvm: 2.5.8
     repo: sensu-plugins/sensu-plugins-ssl
 - provider: script
   script: bonsai/ruby-runtime/travis-build-bonsai-assets.sh sensu-plugins-ssl
@@ -37,4 +37,4 @@ deploy:
   on:
     tags: true
     all_branches: true
-    rvm: 2.4.1
+    rvm: 2.5.8
