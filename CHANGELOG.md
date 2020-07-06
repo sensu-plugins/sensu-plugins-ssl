@@ -5,6 +5,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 - Remove ruby-2.3.0. Upgrade bundler. Fix failing tests (@phumpal).
+- `check-ssl-cert.rb`: Support for StartTLS `--starttls PROTOCOL` (@elfranne)
+- Upgrade to ruby 2.7 and Rubocop 0.86 and fix failing tests (@elfranne).
 
 ### Breaking Changes
 - Bump `sensu-plugin` dependency from `~> 1.2` to `~> 4.0` you can read the changelog entries for [4.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#400---2018-02-17), [3.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#300---2018-12-04), and [2.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#v200---2017-03-29)

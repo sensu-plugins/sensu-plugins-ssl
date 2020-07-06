@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# encoding: UTF-8
+
 #  check-ssl-hsts-preload.rb
 #
 # DESCRIPTION:
@@ -33,7 +33,7 @@ require 'json'
 require 'net/http'
 
 class CheckSSLHSTSStatus < Sensu::Plugin::Check::CLI
-  STATUSES = %w(unknown pending preloaded).freeze
+  STATUSES = %w[unknown pending preloaded].freeze
 
   option :domain,
          description: 'The domain to run the test against',
@@ -68,7 +68,7 @@ class CheckSSLHSTSStatus < Sensu::Plugin::Check::CLI
     response = Net::HTTP.get_response(uri)
 
     case response
-    when Net::HTTPSuccess then
+    when Net::HTTPSuccess
       response
     when Net::HTTPRedirection then
       location = URI(response['location'])
@@ -83,6 +83,7 @@ class CheckSSLHSTSStatus < Sensu::Plugin::Check::CLI
     if response.nil?
       return warning 'Bad response recieved from API'
     end
+
     body = JSON.parse(response.body)
     unless STATUSES.include? body['status']
       warning 'Invalid status returned ' + body['status']

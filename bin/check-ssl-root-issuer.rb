@@ -62,12 +62,12 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
          short: '-f',
          long: '--format FORMAT_VAL',
          default: 'RFC2253',
-         in: %w('RFC2253', 'ONELINE', 'COMPAT'),
+         in: %w[RFC2253 ONELINE COMPAT],
          required: false
 
   def cert_name_format
     # Note: because format argument is pre-validated by mixin 'in' logic eval is safe to use
-    eval "OpenSSL::X509::Name::#{config[:format]}" # rubocop:disable Lint/Eval
+    eval "OpenSSL::X509::Name::#{config[:format]}" # rubocop:disable Security/Eval, Style/EvalWithLocation
   end
 
   def validate_issuer(cert)
@@ -91,7 +91,7 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
     http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
     http.verify_callback = lambda { |verify_ok, store_context|
-      root_cert = store_context.current_cert unless root_cert
+      root_cert ||= store_context.current_cert
       unless verify_ok
         @failed_cert = store_context.current_cert
         @failed_cert_reason = [store_context.error, store_context.error_string] if store_context.error != 0
