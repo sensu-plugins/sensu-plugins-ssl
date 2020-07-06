@@ -79,15 +79,17 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
          long: '--pass '
 
   option :starttls,
-         description: 'Use StartTLS. OpenSSL 1.1.1 supports "smtp", "pop3", "imap", "ftp", "xmpp", "xmpp-server", "irc", "postgres", "mysql", "lmtp", "nntp", "sieve" and "ldap".',
+         description: 'Use StartTLS. OpenSSL 1.1.1 supports smtp, pop3, imap, ftp, xmpp, xmpp-server, irc, postgres, mysql, lmtp, nntp, sieve and ldap.',
          long: '--starttls PROTOCOL '
 
   def ssl_cert_expiry
-    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
+    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} \
+    < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
   end
 
   def ssl_cert_starttls
-    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} -starttls #{config[:starttls]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
+    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} -starttls #{config[:starttls]} \
+    < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
   end
 
   def ssl_pem_expiry
@@ -113,21 +115,7 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
     config[:servername] = config[:host] unless config[:servername]
 
     if config[:starttls]
-      @starttls_supported_protocols = [
-        'smtp',
-        'pop3',
-        'imap',
-        'ftp',
-        'xmpp',
-        'xmpp-server',
-        'irc',
-        'postgres',
-        'mysql',
-        'lmtp',
-        'nntp',
-        'sieve',
-        'ldap'
-      ]
+      @starttls_supported_protocols = %w[smtp pop3 imap ftp xmpp xmpp-server irc postgres mysql lmtp nntp sieve ldap]
       unless @starttls_supported_protocols.include? config[:starttls]
         unknown "Unsupported StartTLS protocol #{config[:starttls]}"
       end
