@@ -23,6 +23,7 @@
 # LICENSE:
 #   Jean-Francois Theroux <me@failshell.io>
 #   Nathan Williams <nath.e.will@gmail.com>
+#   Tom Braarup Cuykens <https://github.com/elfranne/>
 #   Released under the same terms as Sensu (the MIT license); see LICENSE
 #   for details.
 #
@@ -76,11 +77,19 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
          description: 'Pass phrase for the private key in PKCS#12 certificate',
          short: '-S',
          long: '--pass '
+         
+  option :starttls,
+         description: 'Use StartTLS. OpenSSL 1.1.1 supports "smtp", "pop3", "imap", "ftp", "xmpp", "xmpp-server", "irc", "postgres", "mysql", "lmtp", "nntp", "sieve" and "ldap".',
+         long: '--starttls PROTOCOL '
 
   def ssl_cert_expiry
     `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
   end
 
+  def ssl_cert_starttls
+    `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} -starttls #{config[:starttls]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
+  end
+  
   def ssl_pem_expiry
     OpenSSL::X509::Certificate.new(File.read config[:pem]).not_after # rubocop:disable Style/NestedParenthesizedCalls
   end
@@ -102,16 +111,36 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
       end
     end
     config[:servername] = config[:host] unless config[:servername]
+    if config[:starttls]
+      $starttls_supported_protocols =
+      [ 'smtp',
+        'pop3',
+        'imap',
+        'ftp',
+        'xmpp',
+        'xmpp-server',
+        'irc',
+        'postgres',
+        'mysql',
+        'lmtp',
+        'nntp',
+        'sieve',
+        'ldap']
+      unless $starttls_supported_protocols.include? config[:starttls]
+        unknown "Unsupported StartTLS protocol #{config[:starttls]}"
+      end
+    end
   end
 
   def run
     validate_opts
-
     expiry = if config[:pem]
                ssl_pem_expiry
              elsif config[:pkcs12]
                ssl_pkcs12_expiry
-             else
+             elsif config[:starttls]
+               ssl_cert_starttls
+             else 
                ssl_cert_expiry
              end
 
