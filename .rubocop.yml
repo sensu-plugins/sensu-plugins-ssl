@@ -1,6 +1,8 @@
-
 MethodLength:
   Max: 200
+
+Metrics/BlockLength:
+  Max: 50
 
 LineLength:
   Max: 172
@@ -29,5 +31,11 @@ RegexpLiteral:
 Style/Documentation:
   Enabled: false
 
-# AllCops:
-#   TargetRubyVersion: 2.0
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+AllCops:
+  TargetRubyVersion: 2.7

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# encoding: UTF-8
+
 #  check-ssl-host.rb
 #
 # DESCRIPTION:
@@ -42,7 +42,7 @@ require 'socket'
 # Check SSL Host
 #
 class CheckSSLHost < Sensu::Plugin::Check::CLI
-  STARTTLS_PROTOS = %w(smtp imap).freeze
+  STARTTLS_PROTOS = %w[smtp imap].freeze
 
   check_name 'check_ssl_host'
 
@@ -104,7 +104,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
          long: '--starttls PROTO'
 
   def get_cert_chain(host, port, address, client_cert, client_key)
-    tcp_client = TCPSocket.new(address ? address : host, port)
+    tcp_client = TCPSocket.new(address || host, port)
     handle_starttls(config[:starttls], tcp_client) if config[:starttls]
     ssl_context = OpenSSL::SSL::SSLContext.new
     ssl_context.cert = OpenSSL::X509::Certificate.new File.read(client_cert) if client_cert
@@ -139,6 +139,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
 
     status = socket.readline
     return if /^220 / =~ status
+
     critical "#{config[:host]} - did not receive SMTP 220 in response to STARTTLS"
   end
 
@@ -151,6 +152,7 @@ class CheckSSLHost < Sensu::Plugin::Check::CLI
 
     status = socket.readline
     return if /^a001 OK Begin TLS negotiation now/ =~ status
+
     critical "#{config[:host]} - did not receive OK Begin TLS negotiation now"
   end
 

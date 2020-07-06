@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
-# encoding: UTF-8
-#  check-ssl-hsts-preloadable.rb
-#
+
+# check-ssl-hsts-preloadable.rb
 # DESCRIPTION:
 #   Checks a domain against the chromium HSTS API returning errors/warnings if the domain is preloadable
 #
@@ -50,7 +49,7 @@ class CheckSSLHSTSPreloadable < Sensu::Plugin::Check::CLI
     response = Net::HTTP.get_response(uri)
 
     case response
-    when Net::HTTPSuccess then
+    when Net::HTTPSuccess
       response
     when Net::HTTPRedirection then
       location = URI(response['location'])
@@ -65,6 +64,7 @@ class CheckSSLHSTSPreloadable < Sensu::Plugin::Check::CLI
     if response.nil?
       return warning 'Bad response recieved from API'
     end
+
     body = JSON.parse(response.body)
     if !body['errors'].empty?
       critical body['errors'].map { |u| u['summary'] }.join(', ')
