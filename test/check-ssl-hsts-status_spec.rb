@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../bin/check-ssl-hsts-status.rb'
 ###
 # If these randomly start failing then it's probably due to a change in the HSTS of the domain

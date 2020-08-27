@@ -1,4 +1,6 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: false
+
 #
 #   check-ssl-crl
 #
@@ -65,10 +67,10 @@ class CheckSSLCRL < Sensu::Plugin::Check::CLI
   def run
     validate_opts
 
-    next_update = OpenSSL::X509::CRL.new(open(config[:url]).read).next_update
+    next_update = OpenSSL::X509::CRL.new(open(config[:url]).read).next_update # rubocop:disable Security/Open
     minutes_until = seconds_to_minutes(Time.parse(next_update.to_s) - Time.now)
 
-    critical "#{config[:url]} - Expired #{minutes_until.abs} minutes ago" if minutes_until < 0
+    critical "#{config[:url]} - Expired #{minutes_until.abs} minutes ago" if minutes_until < 0 # rubocop:disable Style/NumericPredicate
     critical "#{config[:url]} - #{minutes_until} minutes left, next update at #{next_update}" if minutes_until < config[:critical].to_i
     warning "#{config[:url]} - #{minutes_until} minutes left, next update at #{next_update}" if minutes_until < config[:warning].to_i
     ok "#{config[:url]} - #{minutes_until} minutes left, next update at #{next_update}"

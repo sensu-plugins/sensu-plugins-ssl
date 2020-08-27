@@ -4,10 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md).
 
 ## [Unreleased]
-- Remove ruby-2.3.0. Upgrade bundler. Fix failing tests (@phumpal).
 
 ### Breaking Changes
 - Bump `sensu-plugin` dependency from `~> 1.2` to `~> 4.0` you can read the changelog entries for [4.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#400---2018-02-17), [3.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#300---2018-12-04), and [2.0](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#v200---2017-03-29)
+- Remove ruby-2.3.0. Upgrade bundler. Fix failing tests (@phumpal).
 
 ### Added
 - Travis build automation to generate Sensu Asset tarballs that can be used n conjunction with Sensu provided ruby runtime assets and the Bonsai Asset Index
@@ -17,6 +17,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ### Changed
 - `check-ssl-anchor.rb` uses regexp to test for present of certificates in cert chain that works with both openssl 1.0 and 1.1 formatting
+- Upgrade rake and rubocop dependencies
+- Remediate rubocop issues
 
 ### Fixed
 - ssl-anchor test now uses regexp

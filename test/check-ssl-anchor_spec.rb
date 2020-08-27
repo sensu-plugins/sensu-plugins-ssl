@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../bin/check-ssl-anchor.rb'
 
 describe CheckSSLAnchor do
