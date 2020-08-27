@@ -7,6 +7,10 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [3.0.1] - 2020-08-27
 ### Changed
+- Fixed bonsai script in .travis.yml
+
+## [3.0.1] - 2020-08-27
+### Changed
 - Modified .travis.yml to re-order deploy steps
 
 ## [3.0.0] - 2020-08-27
@@ -133,7 +137,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/3.0.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/3.0.2...HEAD
+[3.0.2]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/2.0.1...3.0.0
 [2.0.1]: https://github.com/sensu-plugins/sensu-plugins-ssl/compare/2.0.0...2.0.1
