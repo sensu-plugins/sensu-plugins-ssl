@@ -1,10 +1,8 @@
-sudo: true
-service: docker
 language: ruby
+services:
+- docker
 cache:
 - bundler
-before_install:
-  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
 install:
 - bundle install
 rvm:
@@ -22,6 +20,13 @@ script:
 before_deploy:
 - bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'"
 deploy:
+- provider: script
+  script: bonsai/ruby-runtime/travis-build-bonsai-assets.sh sensu-plugins-ssl
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    rvm: 2.4.1
 - provider: rubygems
   api_key:
     secure: Kr0fckXoukenIVyWMFVYAi+llLNNKRtfnZatnGDgqQON+vRXuuLGnta2TyBEhmPdiRU8nax5VL3K5uNSkxWmPi7Vtzizz453KShtnFGXuq73H37WIvcJ4bLcvz5K/1RWNEcXMN7/6hgSeDBUzcliFyph4p00WhdhqgFttf0UI/Y=
@@ -31,10 +36,3 @@ deploy:
     all_branches: true
     rvm: 2.4.1
     repo: sensu-plugins/sensu-plugins-ssl
-- provider: script
-  script: bonsai/ruby-runtime/travis-build-bonsai-assets.sh sensu-plugins-ssl
-  skip_cleanup: true
-  on:
-    tags: true
-    all_branches: true
-    rvm: 2.4.1
