@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-# encoding: UTF-8
+# frozen_string_literal: false
+
 #  check-ssl-hsts-preloadable.rb
 #
 # DESCRIPTION:
@@ -43,16 +44,16 @@ class CheckSSLHSTSPreloadable < Sensu::Plugin::Check::CLI
          default: 'https://hstspreload.org/api/v2/preloadable'
 
   def fetch(uri, limit = 10)
-    if limit == 0
+    if limit == 0 # rubocop:disable Style/NumericPredicate
       return nil
     end
 
     response = Net::HTTP.get_response(uri)
 
     case response
-    when Net::HTTPSuccess then
+    when Net::HTTPSuccess
       response
-    when Net::HTTPRedirection then
+    when Net::HTTPRedirection
       location = URI(response['location'])
       fetch(location, limit - 1)
     end
@@ -65,6 +66,7 @@ class CheckSSLHSTSPreloadable < Sensu::Plugin::Check::CLI
     if response.nil?
       return warning 'Bad response recieved from API'
     end
+
     body = JSON.parse(response.body)
     if !body['errors'].empty?
       critical body['errors'].map { |u| u['summary'] }.join(', ')

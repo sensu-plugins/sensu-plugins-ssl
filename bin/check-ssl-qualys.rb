@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# encoding: UTF-8
+# frozen_string_literal: false
 
 #  check-ssl-qualys.rb
 #
@@ -138,7 +138,8 @@ class CheckSSLQualys < Sensu::Plugin::Check::CLI
                ssl_check(true)
              end
       return json if json['status'] == 'READY'
-      if json['endpoints'] && json['endpoints'].is_a?(Array)
+
+      if json['endpoints'] && json['endpoints'].is_a?(Array) # rubocop:disable Style/SafeNavigation
         p "endpoints: #{json['endpoints']}" if config[:debug]
         # The api response sometimes has low eta (which seems unrealistic) from
         # my tests that can be 0 or low numbers which would imply it is done...

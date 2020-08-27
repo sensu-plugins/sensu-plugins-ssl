@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require_relative '../bin/check-java-keystore-cert.rb'
 
 require 'timecop'
 
+# rubocop:disable Metrics/BlockLength
 describe CheckJavaKeystoreCert do
   before(:all) do
     # Ensure the check isn't run when exiting (which is the default)
@@ -64,3 +67,4 @@ describe CheckJavaKeystoreCert do
     expect { check.run }.to raise_error SystemExit
   end
 end
+# rubocop:enable Metrics/BlockLength

@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: false
+
 #
 #   check-java-keystore-cert
 #
@@ -75,7 +77,7 @@ class CheckJavaKeystoreCert < Sensu::Plugin::Check::CLI
 
     days_until = (certificate_expiration_date - Date.today).to_i
 
-    if days_until < 0
+    if days_until < 0 # rubocop: disable Style/NumericPredicate
       critical "Expired #{days_until.abs} days ago"
     elsif days_until < config[:critical]
       critical "#{days_until} days left"

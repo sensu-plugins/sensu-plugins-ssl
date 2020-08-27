@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require_relative '../bin/check-ssl-crl.rb'
 
 require 'timecop'
 
+# rubocop:disable Metrics/BlockLength
 describe CheckSSLCRL do
   before(:all) do
     # Ensure the check isn't run when exiting (which is the default)
@@ -48,3 +51,4 @@ describe CheckSSLCRL do
     expect { check.run }.to raise_error SystemExit
   end
 end
+# rubocop:enable Metrics/BlockLength
