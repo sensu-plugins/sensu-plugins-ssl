@@ -68,7 +68,7 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
          required: false
 
   def cert_name_format
-    # Note: because format argument is pre-validated by mixin 'in' logic eval is safe to use
+    # NOTE: because format argument is pre-validated by mixin 'in' logic eval is safe to use
     eval "OpenSSL::X509::Name::#{config[:format]}" # rubocop:disable Security/Eval, Style/EvalWithLocation
   end
 
@@ -100,7 +100,7 @@ class CheckSSLRootIssuer < Sensu::Plugin::Check::CLI
       end
       verify_ok
     }
-    http.start {}
+    http.start
     root_cert
   end
 

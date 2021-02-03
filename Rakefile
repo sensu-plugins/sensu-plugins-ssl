@@ -13,8 +13,7 @@ ENV['TZ'] = 'CET'
 args = %i[spec make_bin_executable yard rubocop check_binstubs]
 
 YARD::Rake::YardocTask.new do |t|
-  OTHER_PATHS = %w[].freeze
-  t.files = ['lib/**/*.rb', 'bin/**/*.rb', OTHER_PATHS]
+  t.files = ['lib/**/*.rb', 'bin/**/*.rb']
   t.options = %w[--markup-provider=redcarpet --markup=markdown --main=README.md --files CHANGELOG.md]
 end
 
