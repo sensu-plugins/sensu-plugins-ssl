@@ -97,10 +97,10 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
     elsif config[:pem]
       unknown 'No such cert' unless File.exist? config[:pem]
     elsif config[:pkcs12]
-      if !config[:pass]
-        unknown 'No pass phrase specified for PKCS#12 certificate'
-      else
+      if config[:pass]
         unknown 'No such cert' unless File.exist? config[:pkcs12]
+      else
+        unknown 'No pass phrase specified for PKCS#12 certificate'
       end
     end
     config[:servername] = config[:host] unless config[:servername]
