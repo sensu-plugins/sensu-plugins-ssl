@@ -29,7 +29,7 @@
 #   for details.
 #
 
-require 'date'
+require 'time'
 require 'openssl'
 require 'sensu-plugin/check/cli'
 
@@ -38,15 +38,15 @@ require 'sensu-plugin/check/cli'
 #
 class CheckSSLCert < Sensu::Plugin::Check::CLI
   option :critical,
-         description: 'Numbers of days left',
+         description: 'Time (hours or days) left',
          short: '-c',
-         long: '--critical DAYS',
+         long: '--critical TIME',
          required: true
 
   option :warning,
-         description: 'Numbers of days left',
+         description: 'Time (hours or days) left',
          short: '-w',
-         long: '--warning DAYS',
+         long: '--warning TIME',
          required: true
 
   option :pem,
@@ -78,6 +78,11 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
          description: 'Pass phrase for the private key in PKCS#12 certificate',
          short: '-S',
          long: '--pass '
+
+  option :hours,
+         description: 'Calculate expiry in hours, instead of days. Useful for short-lived (<24h) ACME certs',
+         short: '-H',
+         long: '--hours'
 
   def ssl_cert_expiry
     `openssl s_client -servername #{config[:servername]} -connect #{config[:host]}:#{config[:port]} < /dev/null 2>&1 | openssl x509 -enddate -noout`.split('=').last
@@ -117,16 +122,24 @@ class CheckSSLCert < Sensu::Plugin::Check::CLI
                ssl_cert_expiry
              end
 
-    days_until = (Date.parse(expiry.to_s) - Date.today).to_i
+    time_delta = Time.parse(expiry.to_s) - Time.now
 
-    if days_until < 0 # rubocop:disable Style/NumericPredicate
-      critical "Expired #{days_until.abs} days ago"
-    elsif days_until < config[:critical].to_i
-      critical "#{days_until} days left"
-    elsif days_until < config[:warning].to_i
-      warning "#{days_until} days left"
+    if config[:hours]
+      time_delta_check = (time_delta / 3600).floor
+      time_check_unit = 'hours'
     else
-      ok "#{days_until} days left"
+      time_delta_check = (time_delta / 86_400).floor
+      time_check_unit = 'days'
+    end
+
+    if time_delta_check < 0 # rubocop:disable Style/NumericPredicate
+      critical "Expired #{time_delta_check} #{time_check_unit} ago"
+    elsif time_delta_check < config[:critical].to_i
+      critical "#{time_delta_check} #{time_check_unit} left"
+    elsif time_delta_check < config[:warning].to_i
+      warning "#{time_delta_check} #{time_check_unit} left"
+    else
+      ok "#{time_delta_check} #{time_check_unit} left"
     end
   end
 end
