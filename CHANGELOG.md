@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Added
+- `check-ssh-cert.rb` can now calculate expiry in hours, instead of days.
+
 ### Changed
 - Removed centos build from .bonsai.yml
 
